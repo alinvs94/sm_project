@@ -1,3 +1,5 @@
+@import '../../assets/variables';
+
 .navBarWrapper {
   width: 99%;
   align-self: center;
@@ -8,14 +10,14 @@
     justify-content: center;
     border-radius: 8px;
     padding: 5px 0 5px 0;
-    background-color: #016797;
+    background-color: $primary;
 
     .navButtons {
       font-weight: bold;
       transition: 0.3s all;
 
       &:hover {
-        color: black;
+        color: $tertiary;
       }
     }
 
@@ -30,8 +32,8 @@
       transition: 0.3s all;
 
       &:hover {
-        background-color: #016797;
-        color: black;
+        background-color: $primary;
+        color: $tertiary;
       }
     }
   }

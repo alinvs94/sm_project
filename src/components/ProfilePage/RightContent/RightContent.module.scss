@@ -1,3 +1,5 @@
+@import "../../assets/variables";
+
 .rightWrapper {
   width: 48%;
 
@@ -43,14 +45,19 @@
         gap: 10px;
         text-decoration: none;
         font-weight: bold;
-        color:black;
-        transition: 0.6s all;
+        color: black;
+        transition: 0.3s all;
         border-radius: 8px;
         height: 40px;
         padding: 0 7px 0 7px;
+
+        .icon {
+          color: $primary;
+        }
+
         &:hover {
-         background-color: rgba(0, 128, 128, 0.6);
-         color:white !important;
+          background-color: $quaternary;
+          color: white;
         }
       }
     }

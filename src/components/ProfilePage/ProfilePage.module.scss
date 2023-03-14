@@ -1,3 +1,5 @@
+@import '../assets/variables';
+
 .profilePageWrapper {
   display: flex;
   justify-content: center;
@@ -30,7 +32,7 @@
         color: white;
         text-decoration: none;
         align-items: center;
-        background-color: #016797;
+        background-color: $primary;
         border-radius: 10px;
         padding: 0 6px 0 6px;
         transition: 0.6s all;
@@ -69,7 +71,7 @@
             position: absolute;
             top: 110px;
             right: 170px;
-            background-color: #016797;
+            background-color: $primary;
             border-radius: 50%;
             width: 36px;
             height: 36px;
@@ -120,7 +122,7 @@
           padding: 4px;
           margin-left: 10px;
           background-color: lightgrey;
-          color: #016797;
+          color: $primary;
           transition: 0.3s all;
           &:hover {
             background-color: teal !important;

@@ -1,3 +1,6 @@
+@import '../../assets/variables';
+
+
 .rightContainer {
   position: fixed;
   right: 0;
@@ -7,17 +10,17 @@
   height: 93.3vh;
   display: flex;
   flex-direction: column;
-  background-color: #9c9c9c28;
+  background-color: $secondary;
   margin-top: 5rem;
   width: 350px;
 
   .chatTitle {
-    color: teal;
+    color: $quaternary;
     margin: 0 0 5px 25px;
   }
 
   .noUser {
-    color: #016797;
+    color: $quaternary;
     font-weight: bold;
     margin-left: 25px;
     margin-top: 20px;

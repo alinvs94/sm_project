@@ -24,8 +24,6 @@
         background-color: lightgrey;
       }
 
-      
-
       a {
         height: 100%;
         width: 100%;
@@ -34,17 +32,18 @@
         text-decoration: none;
         font-size: 20px;
         font-weight: bold;
-        color: white !important;
+        color: black;
 
         &:visited {
           color: black;
         }
 
         &:active {
-          color: #0084c1;
+          color: $quaternary;
         }
+        
         &:hover {
-          color: black;
+          color: $primary;
         }
 
         img {
@@ -57,7 +56,7 @@
         svg {
           font-size: 28px;
           margin: 5px 19.5px 5px 8px;
-          color: $tertiary;
+          color: $primary;
         }
       }
     }

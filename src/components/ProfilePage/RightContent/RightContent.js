@@ -54,7 +54,7 @@ export function RightContent(props) {
           <img src={require("../assets/userProfile.jpg")} alt="userPic"></img>
           <input
             type="text"
-            placeholder="What's UP?"
+            placeholder="  What's UP?"
             ref={stat}
             onKeyUp={addStats}
           ></input>
@@ -62,15 +62,15 @@ export function RightContent(props) {
         <hr />
         <div className={styles.iconsContainer}>
           <Link className={styles.iconElement}>
-            <ShareIcon style={{ color: "#016797" }}></ShareIcon>{" "}
+            <ShareIcon className={styles.icon}></ShareIcon>{" "}
             <p>Share a link</p>
           </Link>
           <Link className={styles.iconElement}>
-            <AddToPhotosIcon style={{ color: "#016797" }}></AddToPhotosIcon>{" "}
+            <AddToPhotosIcon className={styles.icon}></AddToPhotosIcon>{" "}
             <p>Photo/Video</p>
           </Link>
           <Link className={styles.iconElement}>
-            <FlagIcon style={{ color: "#016797" }}></FlagIcon>{" "}
+            <FlagIcon className={styles.icon}></FlagIcon>{" "}
             <p>Something important!</p>
           </Link>
         </div>

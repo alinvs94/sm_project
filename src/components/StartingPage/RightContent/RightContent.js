@@ -46,11 +46,13 @@ export function RightContent() {
 
 
 
+console.log(user[0].name)
+
   return (
     <div className={styles.rightContainer}>
       <AdsSection></AdsSection>
       <hr />
-      {/* <BirthdaySection name={`${user[0].name.first} ${user[0].name.last}`} key={user[0].userId}></BirthdaySection> */}
+      <BirthdaySection name={`${user[0].name}`} key={user[0].userId}></BirthdaySection>
       <hr />
       <h1 className={styles.chatTitle}>Contacts</h1>
 
