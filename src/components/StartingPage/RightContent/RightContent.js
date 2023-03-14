@@ -39,11 +39,10 @@ export function RightContent() {
     user = USERS.filter((element) => element.id === randomNum);
     chatUser = USERS.map((user) => {
       return (
-        <ChatSection name={`${user[0].name}`} id={user[0].id} key={user[0].id}></ChatSection>
+        <ChatSection name={`${user.name}`} id={user.id} key={user.id}></ChatSection>
       );
     });
   }
-x
 
 
 
