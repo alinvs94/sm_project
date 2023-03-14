@@ -1,0 +1,65 @@
+@import "../../../assets/variables";
+
+.linkListContainer {
+   
+  .linkListElements {
+    // <ul>
+    position: relative;
+    list-style-type: none;
+    padding-left: 15px;
+
+    .hidden {
+      display: none !important;
+    }
+
+    .linkListElement {
+      // <li>
+      display: flex;
+      align-items: center;
+      width: 90%;
+      border-radius: 10px;
+      height: 50px;
+
+      &:hover {
+        background-color: lightgrey;
+      }
+
+      
+
+      a {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        color: white !important;
+
+        &:visited {
+          color: black;
+        }
+
+        &:active {
+          color: #0084c1;
+        }
+        &:hover {
+          color: black;
+        }
+
+        img {
+          height: 40px;
+          margin: 5px 0 5px 5px;
+          border-radius: 50px;
+          margin-right: 10px;
+        }
+
+        svg {
+          font-size: 28px;
+          margin: 5px 19.5px 5px 8px;
+          color: $tertiary;
+        }
+      }
+    }
+  }
+}

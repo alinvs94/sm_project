@@ -1,0 +1,19 @@
+.suggestedSectionContainer {
+   height: auto;
+   h1 {
+      margin-left:23px;
+      
+      font-weight: bold;
+      color: teal;
+   }
+
+   .newsWrapper {
+      display: flex;
+      flex-direction: column;
+      margin-left: 15px;
+      margin-right: 15px;
+   }
+}
+
+
+ 

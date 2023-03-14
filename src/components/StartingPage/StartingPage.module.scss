@@ -1,0 +1,44 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+
+  .leftContent,
+  .rightContent {
+    display: flex;
+  }
+
+  .newsFeed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px 0 20px;
+  }
+}
+
+@media only screen and (max-width: 1422px) {
+  .mainContainer {
+    .leftContent {
+      display: none;
+    }
+
+    .newsFeed {
+      align-items: flex-start;
+    }
+  }
+}
+
+@media only screen and (max-width: 1098px) {
+  .mainContainer {
+    display: flex;
+
+    .newsFeed {
+      align-items: center;
+      margin: 0;
+    }
+    .rightContent {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,167 @@
+.mainPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #aaaaaa;
+  border-radius: 8px;
+  margin-top: 5.05rem;
+  width: 55%;
+  min-width: 480px;
+  max-width: 1400px;
+
+  .postHeader {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+
+    .userInfo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      margin: 10px 0 0 10px;
+
+      &:hover {
+        color: #016797;
+      }
+
+      .profilePictureImg {
+        height: 3.5rem;
+        width: auto;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .username {
+        font-weight: bold;
+        color: black;
+        font-size: 30px;
+      }
+    }
+
+    .contextMenu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid #969696;
+      width: fit-content;
+      height: fit-content;
+      margin: 10px 10px 0 0;
+      &:hover {
+        background-color: #016797;
+        color: white;
+        border: 1px solid white;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    p {
+      margin-left: 10px;
+    }
+
+    .imageWrapper {
+      position: relative;
+      .mainPostImg {
+        width: 100%;
+      }
+      .infoIcon {
+        position: absolute;
+        right: 5px;
+        bottom: 1px;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+  .reacts {
+    display: flex;
+    justify-content: space-between;
+
+    .likesContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-left: 10px;
+    }
+
+    .sharesContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-right: 10px;
+    }
+
+    .likesNumber {
+      padding-left: 7px;
+    }
+    .reactsNumber {
+      padding-left: 7px;
+    }
+  }
+
+  .reactsActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 10px 0 10px;
+    .reaction {
+      display: flex;
+      cursor: pointer;
+      gap: 7px;
+      font-weight: bold;
+
+      .rotateIcon {
+        transform: rotate(0deg);
+        transition: 1s all ease-in-out;
+
+        &.rotatedLikeIcon {
+          transform: rotateX(180deg);
+        }
+
+        &.rotatedShareIcon {
+          transform: rotateY(180deg);
+        }
+      }
+      &.blue {
+        color: #016797;
+      }
+    }
+  }
+}
+
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+  .insertCommentField {
+    display: flex;
+    justify-content: center;
+    input {
+      margin: 15px 0 15px 0;
+      width: 60%;
+      height: 30px;
+      border-radius: 5px;
+      border: 1px solid #969696;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 1422px) {
+  .mainPost {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 1098px) {
+  .mainPost {
+    width: 85%;
+  }
+}

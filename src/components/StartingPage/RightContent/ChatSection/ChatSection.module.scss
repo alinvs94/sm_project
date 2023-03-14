@@ -1,0 +1,35 @@
+.chatSectionContainer {
+  width: 90%;
+  
+
+  .contactsContainer {
+    position: relative;
+    display: flex;
+    margin: 0px 0 0px 25px;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 5px 0 5px 10px;
+
+
+    &:hover {
+      background-color: lightgrey !important;
+    }
+    .pictureBadge {
+      right: 5px;
+
+      .profilePicture {
+        width: 50px;
+        border-radius: 50%;
+      }
+    }
+
+    .profileName {
+      margin-left: 10px;
+    }
+  }
+  .isOffline {
+    font-weight: 300;
+  }
+}

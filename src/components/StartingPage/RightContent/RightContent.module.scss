@@ -1,0 +1,62 @@
+.rightContainer {
+  position: fixed;
+  right: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  height: 93.3vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #9c9c9c28;
+  margin-top: 5rem;
+  width: 350px;
+
+  .chatTitle {
+    color: teal;
+    margin: 0 0 5px 25px;
+  }
+
+  .noUser {
+    color: #016797;
+    font-weight: bold;
+    margin-left: 25px;
+    margin-top: 20px;
+  }
+
+  .chatMenu {
+    position: absolute;
+    align-items: center;
+    display: flex;
+    top: 675px;
+    right: 20px;
+
+    .dropDownMenu {
+      background-color: white;
+    }
+
+    .chatMenuIcon {
+      border-radius: 50%;
+      color: black;
+      height: 24px;
+      width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: #016797;
+        color: white;
+      }
+
+      .searchIcon {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+// @media only screen and (min-width: 1750px) {
+//   .rightContainer {
+//     right: 5%;
+//   }
+// }
