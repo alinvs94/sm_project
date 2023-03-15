@@ -46,7 +46,7 @@ export function ProfilePage() {
         <div className={styles.coverWrapper}>
           <img
             className={styles.coverPic}
-            src={require('./assets/cover.jpg')}
+            src={'https://picsum.photos/seed/picsum/1100/350'}
             alt="Profile Cover"
           ></img>
 

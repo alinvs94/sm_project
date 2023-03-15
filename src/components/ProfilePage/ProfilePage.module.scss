@@ -18,9 +18,8 @@
       position: relative;
       width: inherit;
       .coverPic {
-        width: inherit;
-        margin-top: -500px;
-        border-radius: 8px;
+        border-radius: 0 0 8px 8px;
+
       }
 
       .coverIcon {
@@ -70,7 +69,7 @@
           .photoIcon {
             position: absolute;
             top: 110px;
-            right: 170px;
+            right: 185px;
             background-color: $primary;
             border-radius: 50%;
             width: 36px;

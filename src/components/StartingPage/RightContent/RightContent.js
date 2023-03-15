@@ -14,45 +14,33 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 
 export function RightContent() {
-  // const { USERS } = useContext(DataContext);
+  const { USERS } = useContext(DataContext);
 
-  const USERS = useAxios("https://jsonplaceholder.typicode.com/users");
-
-  const [noUser, setNoUser] = useState(false);
+  const users = useAxios("https://jsonplaceholder.typicode.com/users");
 
   let user;
   let chatUser;
   const randomNum = Math.floor(Math.random() * 10) + 1;
 
-  useEffect(() => {
-    if (USERS.length === 0) {
-      setNoUser(true);
-    } else {
-      setNoUser(false);
-    }
-  }, [USERS.length]);
-
-  if (USERS.length === 0) {
-    user = [{ name: {first:  "No birthday today"} }];
+  if (users.length === 0) {
+    user = { name: {first:  "No birthday today"} };
     chatUser = "You've got no friends :(";
   } else {
-    user = USERS.filter((element) => element.id === randomNum);
+    user = USERS.find((element) => element.userId === randomNum);
     chatUser = USERS.map((user) => {
-      return (
-        <ChatSection name={`${user.name}`} id={user.id} key={user.id}></ChatSection>
-      );
+      if(user.userId <= 15) {
+        return (
+          <ChatSection name={`${user.name.first} ${user.name.last}`} id={user.userId} key={user.userId} image={user.picture.medium}></ChatSection>
+        );
+      }
     });
   }
-
-
-
-console.log(user[0].name)
 
   return (
     <div className={styles.rightContainer}>
       <AdsSection></AdsSection>
       <hr />
-      <BirthdaySection name={`${user[0].name}`} key={user[0].userId}></BirthdaySection>
+      {user ? <BirthdaySection name={`${user.name.first} ${user.name.last} `} key={user.userId}></BirthdaySection> : 'Still loading'}
       <hr />
       <h1 className={styles.chatTitle}>Contacts</h1>
 
@@ -73,7 +61,7 @@ console.log(user[0].name)
         </Tooltip>
       </div>
 
-      <div className={noUser ? styles.noUser : 'null'}>{chatUser}</div>
+      <div>{chatUser}</div>
     </div>
   );
 }

@@ -88,7 +88,6 @@ export function RightContent(props) {
       </div>
 
       <div className={styles.postsFeed}>
-        {" "}
         {posts &&
           posts.map((post) => {
             if (post.id < 5) {
@@ -97,6 +96,7 @@ export function RightContent(props) {
                   style={{ width: "100%" }}
                   number={Math.floor(Math.random() * 1000)}
                   postData={post}
+                  id={post.id}
                   key={post.id}
                   name={`${myAccount.firstName} ${myAccount.lastName}`}
                   image={myAccount.image}

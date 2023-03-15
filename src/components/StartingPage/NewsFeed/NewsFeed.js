@@ -26,7 +26,8 @@ const COMMENTS = [
 ];
 
 export function NewsFeed(props) {
-  const [likes, setLikes] = useState(Math.floor(Math.random() * 100)); // floor() rotunjeste numerele
+
+  const [likes, setLikes] = useState(Math.floor(Math.random() * 100));
   const [shares, setShares] = useState(Math.floor(Math.random() * 100));
 
   const [isLiked, setIsLiked] = useState(false);

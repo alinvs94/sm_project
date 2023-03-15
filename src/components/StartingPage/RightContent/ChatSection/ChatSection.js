@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import styles from "./ChatSection.module.scss";
 
 export function ChatSection(props) {
-  const profilePic = require(`./assets/profile${props.id}.jpg`);
+  const profilePic = props.image;
 
   let isOnline;
   let isOffline;
 
-  if (props.id < 5) {
+  if (props.id < 7) {
     isOnline = "success";
     isOffline = false;
   } else {

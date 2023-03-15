@@ -35,45 +35,7 @@ export const AppData = ({ children }) => {
       };
     });
 
-  const USERS = usersArray
-    ? usersArray
-    : [
-        {
-          gender: "male",
-          name: { title: "Mr", first: "Malthe", last: "Petersen" },
-          location: {
-            street: { number: 6557, name: "Rønnevej" },
-            city: "Lemvig",
-            state: "Midtjylland",
-            country: "Denmark",
-            postcode: 48918,
-            coordinates: { latitude: "-46.8841", longitude: "-82.4668" },
-            timezone: { offset: "+9:30", description: "Adelaide, Darwin" },
-          },
-          email: "malthe.petersen@example.com",
-          login: {
-            uuid: "8ceaa756-d585-4051-a091-41a84eb508f3",
-            username: "organicbird343",
-            password: "1024",
-            salt: "YwGuduej",
-            md5: "4b829e12f985db614d758c4e0aecb3d9",
-            sha1: "55376812af4c0f09f48d38fed4f169f1ba4f3e96",
-            sha256:
-              "8b74ac88c4da3d507f3efce905b10461d88f4f3199a21507626b81ddbf8e6a5e",
-          },
-          dob: { date: "1949-06-12T23:24:38.363Z", age: 73 },
-          registered: { date: "2015-07-23T23:37:45.512Z", age: 7 },
-          phone: "29730592",
-          cell: "91763984",
-          id: { name: "CPR", value: "120649-1532" },
-          picture: {
-            large: "https://randomuser.me/api/portraits/men/55.jpg",
-            medium: "https://randomuser.me/api/portraits/med/men/55.jpg",
-            thumbnail: "https://randomuser.me/api/portraits/thumb/men/55.jpg",
-          },
-          nat: "DK",
-        },
-      ];
+  const USERS = usersArray ? usersArray : [];
 
   // Get user pictures
 
