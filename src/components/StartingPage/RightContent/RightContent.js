@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { useAxios } from "../../../hooks/useAxios";
+import { useContext } from "react";
 import { AdsSection } from "./AdsSection/AdsSection";
 import { BirthdaySection } from "./BirthdaySection/BirthdaySection";
 import { ChatSection } from "./ChatSection/ChatSection";
@@ -16,21 +15,22 @@ import React from "react";
 export function RightContent() {
   const { USERS } = useContext(DataContext);
 
-  const users = useAxios("https://jsonplaceholder.typicode.com/users");
-
-  let user;
+  let birthdayUser;
   let chatUser;
-  const randomNum = Math.floor(Math.random() * 10) + 1;
+  const randomNum = Math.floor(Math.random() * 690) + 2;
 
-  if (users.length === 0) {
-    user = { name: {first:  "No birthday today"} };
+  if (USERS.length === 0) {
+    birthdayUser = { name: { first: "No birthday today" } };
     chatUser = "You've got no friends :(";
   } else {
-    user = USERS.find((element) => element.userId === randomNum);
+    birthdayUser = USERS.find((element) => element.userId === randomNum);
     chatUser = USERS.map((user) => {
-      if(user.userId <= 15) {
+      if (user.userId > 1 && user.userId <= 15) {
         return (
-          <ChatSection name={`${user.name.first} ${user.name.last}`} id={user.userId} key={user.userId} image={user.picture.medium}></ChatSection>
+          <ChatSection
+            user={user}
+            key={user.userId}
+          ></ChatSection>
         );
       }
     });
@@ -40,7 +40,14 @@ export function RightContent() {
     <div className={styles.rightContainer}>
       <AdsSection></AdsSection>
       <hr />
-      {user ? <BirthdaySection name={`${user.name.first} ${user.name.last} `} key={user.userId}></BirthdaySection> : 'Still loading'}
+      {birthdayUser ? (
+        <BirthdaySection
+          user={birthdayUser}
+          key={birthdayUser.userId}
+        ></BirthdaySection>
+      ) : (
+        "Still loading"
+      )}
       <hr />
       <h1 className={styles.chatTitle}>Contacts</h1>
 

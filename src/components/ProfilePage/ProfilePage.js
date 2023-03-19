@@ -11,12 +11,11 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CreateIcon from "@mui/icons-material/Create";
-import { useState, useContext } from "react";
-import { useFetch } from "../../hooks/useFetch";
+import { useContext } from "react";
 
 export function ProfilePage() {
 
-  const { USERS, friendsNum } = useContext(DataContext);
+  const { USERS, friendsNum, clickedUser } = useContext(DataContext);
 
   let friend;
 
@@ -46,7 +45,7 @@ export function ProfilePage() {
         <div className={styles.coverWrapper}>
           <img
             className={styles.coverPic}
-            src={'https://picsum.photos/seed/picsum/1100/350'}
+            src={`https://picsum.photos/seed/${clickedUser.userId}/1100/350`}
             alt="Profile Cover"
           ></img>
 
@@ -63,7 +62,7 @@ export function ProfilePage() {
           <div className={styles.leftHeader}>
             <img
               className={styles.profilePic}
-              src={require("./assets/userProfile.jpg")}
+              src={clickedUser.picture.large}
               alt="Profile Pic"
             ></img>
 
@@ -76,7 +75,7 @@ export function ProfilePage() {
                 </Tooltip>
               </div>
 
-              <h1>Alin Vasiliu</h1>
+              <h1>{`${clickedUser.name.first} ${clickedUser.name.last}`}</h1>
 
               <div className={styles.friendsCount}>
                 {friendsNum} <h5>friends</h5>

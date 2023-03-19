@@ -12,11 +12,9 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import PlaceIcon from "@mui/icons-material/Place";
 import Grid from "@mui/material/Grid";
 
-export function LeftContent(props) {
-  const { USERS, userPicArray } = useContext(DataContext);
+export function LeftContent() {
+  const { USERS, userPicArray, clickedUser } = useContext(DataContext);
 
-  // const randomUsers = getUsers(9);
- 
   let photo;
 
   if (userPicArray.length === 0) {
@@ -37,15 +35,15 @@ export function LeftContent(props) {
         <h1> In short</h1>
         <p>
           <SchoolIcon></SchoolIcon> Studied at{" "}
-          <Link className={styles.infoLink}>My School</Link>
+          <Link className={styles.infoLink}>{`${clickedUser.location.state}`}</Link>
         </p>
         <p>
           <LocationCityIcon></LocationCityIcon> Living in{" "}
-          <Link className={styles.infoLink}>My City</Link>
+          <Link className={styles.infoLink}>{`${clickedUser.location.city}`}</Link>
         </p>
         <p>
           <PlaceIcon></PlaceIcon> From{" "}
-          <Link className={styles.infoLink}>My Country</Link>
+          <Link className={styles.infoLink}>{`${clickedUser.location.country}`}</Link>
         </p>
 
         <Button variant="contained" className={styles.addInfoButton}>

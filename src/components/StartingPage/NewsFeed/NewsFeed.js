@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import styles from "./NewsFeed.module.scss";
+import { useRef, useState } from "react";
+import { CommentsSection } from "./Comments/CommentsSection";
+import { DataContext } from "../../AppData/AppData";
+import { useContext } from "react";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import InfoTwoToneIcon from "@mui/icons-material/Info";
 import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
 import ReplyIcon from "@mui/icons-material/Reply";
 import CommentIcon from "@mui/icons-material/Comment";
-import { useRef, useState } from "react";
-import { CommentsSection } from "./Comments/CommentsSection";
 import Tooltip from "@mui/material/Tooltip";
 
 const COMMENTS = [
@@ -26,6 +28,12 @@ const COMMENTS = [
 ];
 
 export function NewsFeed(props) {
+  const { handleUser } = useContext(DataContext);
+
+  function userClick() {
+    handleLike()
+  }
+
 
   const [likes, setLikes] = useState(Math.floor(Math.random() * 100));
   const [shares, setShares] = useState(Math.floor(Math.random() * 100));

@@ -2,23 +2,20 @@ import styles from "./RightContent.module.scss";
 import { Link } from "react-router-dom";
 import { NewsFeed } from "../../StartingPage/NewsFeed/NewsFeed";
 import { useFetch } from "../../../hooks/useFetch";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
+import { CommentsSection } from "../../StartingPage/NewsFeed/Comments/CommentsSection";
+import { DataContext } from "../../AppData/AppData";
+
 
 import ShareIcon from "@mui/icons-material/Share";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import FlagIcon from "@mui/icons-material/Flag";
-import { CommentsSection } from "../../StartingPage/NewsFeed/Comments/CommentsSection";
-
-const myAccount = {
-  firstName: "Alin",
-  lastName: "Vasiliu",
-  image: require('../assets/userProfile.jpg'),
-};
 
 const STATS = [];
 
-export function RightContent(props) {
-  const posts = useFetch("https://jsonplaceholder.typicode.com/posts");
+export function RightContent() {
+
+  const {clickedUser, posts } = useContext(DataContext);
 
   const [stats, setStats] = useState(STATS);
 
@@ -51,7 +48,7 @@ export function RightContent(props) {
     <div className={styles.rightWrapper}>
       <div className={styles.topRight}>
         <div className={styles.inputContainer}>
-          <img src={require("../assets/userProfile.jpg")} alt="userPic"></img>
+          <img src={clickedUser.picture.large} alt="userPic"></img>
           <input
             type="text"
             placeholder="  What's UP?"
@@ -98,8 +95,8 @@ export function RightContent(props) {
                   postData={post}
                   id={post.id}
                   key={post.id}
-                  name={`${myAccount.firstName} ${myAccount.lastName}`}
-                  image={myAccount.image}
+                  name={`${clickedUser.name.first} ${clickedUser.name.last}`}
+                  image={clickedUser.picture.large}
                 ></NewsFeed>
               );
             }

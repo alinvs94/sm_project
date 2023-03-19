@@ -6,19 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../AppData/AppData";
 
 export function StartingPage() {
-  const { USERS, fetchPosts, randomNumbArray } = useContext(DataContext);
-
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchedPosts = fetchPosts(
-      "https://jsonplaceholder.typicode.com/posts"
-    ).then((res) => {
-      setPosts((prevState) => {
-        return (prevState = res);
-      });
-    });
-  }, []);
+  const { USERS, posts, randomNumbArray } = useContext(DataContext);
 
   return (
     <section className={styles.mainContainer}>
