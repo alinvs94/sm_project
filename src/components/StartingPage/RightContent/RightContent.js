@@ -13,17 +13,16 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 
 export function RightContent() {
-  const { USERS } = useContext(DataContext);
+  const { USERS, birthdayNumb } = useContext(DataContext);
 
   let birthdayUser;
   let chatUser;
-  const randomNum = Math.floor(Math.random() * 690) + 2;
 
   if (USERS.length === 0) {
     birthdayUser = { name: { first: "No birthday today" } };
     chatUser = "You've got no friends :(";
   } else {
-    birthdayUser = USERS.find((element) => element.userId === randomNum);
+    birthdayUser = USERS.find((element) => element.userId === birthdayNumb);
     chatUser = USERS.map((user) => {
       if (user.userId > 1 && user.userId <= 15) {
         return (

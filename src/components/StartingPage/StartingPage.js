@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../AppData/AppData";
 
 export function StartingPage() {
-  const { USERS, posts, randomNumbArray } = useContext(DataContext);
+  const { USERS, posts, numbArray } = useContext(DataContext);
 
   return (
     <section className={styles.mainContainer}>
@@ -17,15 +17,15 @@ export function StartingPage() {
       <div className={styles.newsFeed}>
         {posts.map((post) => {
           if (post.id < 31) {
-            let postUser = USERS.filter((user) => user.userId === randomNumbArray[post.id]);
-            if (postUser[0] !== undefined) {
+            let postUser = USERS.find((user) => user.userId === numbArray[post.id]);
+            if (postUser !== undefined) {
+
               return (
                 <NewsFeed
                   postData={post}
                   key={post.id}
-                  id={postUser[0].userId}
-                  name={`${postUser[0].name.first} ${postUser[0].name.last}`}
-                  image={postUser[0].picture.large}
+                  id={post.id}
+                  user={postUser}
                 ></NewsFeed>
               );
             }

@@ -6,7 +6,7 @@ import { useContext } from "react";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 
 export function BirthdaySection(props) {
-  const {handleUser} = useContext(DataContext);
+  const { handleUser } = useContext(DataContext);
 
   function userClick() {
     handleUser(props.user);

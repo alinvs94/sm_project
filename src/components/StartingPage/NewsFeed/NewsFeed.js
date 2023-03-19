@@ -31,7 +31,8 @@ export function NewsFeed(props) {
   const { handleUser } = useContext(DataContext);
 
   function userClick() {
-    handleLike()
+    handleUser(props.user);
+
   }
 
 
@@ -99,13 +100,16 @@ let today= new Date()
     <>
       <div className={styles.mainPost}>
         <div className={styles.postHeader}>
-          <Link className={styles.userInfo}>
+          <Link className={styles.userInfo}
+          to='/user'
+          onClick={userClick}
+          >
             <img
-              src={props.image}
+              src={props.user.picture.large}
               alt="ProfilePic"
               className={styles.profilePictureImg}
             ></img>
-            <span className={styles.username}>{props.name}</span>
+            <span className={styles.username}>{`${props.user.name.first} ${props.user.name.last}`}</span>
           </Link>
           <Tooltip title="Show more" placement="left">
             <div className={styles.contextMenu}>
@@ -118,7 +122,7 @@ let today= new Date()
           <p>{props.postData.title}</p>
           <div className={styles.imageWrapper}>
             <img
-              src={`https://picsum.photos/1000/700?random=${props.id}`}
+              src={`https://picsum.photos/seed/${props.id+10}/1000/700`}
               className={styles.mainPostImg}
               alt="postImage"
             ></img>

@@ -7,8 +7,13 @@ export const DataContext = createContext({});
 export const AppData = ({ children }) => {
   const [data, setData] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [clickedUser, setclickedUser] = useState({});
+  const [clickedUser, setClickedUser] = useState({});
   const [friendsNum, setFriendsNum] = useState();
+  const [numbArray, setNumbArray] = useState();
+  const [birthdayNumb, setBirthdayNumb] = useState();
+  const [userPicArray, setUserPicArray] = useState();
+
+  const navigate = useNavigate();
 
   const alinUser = {
     gender: "male",
@@ -53,15 +58,15 @@ export const AppData = ({ children }) => {
 
   useEffect(() => {
     try {
-      fetch("https://randomuser.me/api/?results=700")
-      .then(res => res.json())
-      .then(res => {
-        setData(prevState => {
-          return prevState = res;
-        })
-      })
+      fetch("https://randomuser.me/api/?seed=1&results=700")
+        .then((res) => res.json())
+        .then((res) => {
+          setData((prevState) => {
+            return (prevState = res);
+          });
+        });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }, []);
 
@@ -82,15 +87,10 @@ export const AppData = ({ children }) => {
 
   USERS.unshift(alinUser);
 
-  // Get user pictures
+  
 
-  const userPicArray = [];
-  let pic;
+  const usersLength = USERS ? USERS.length : undefined;
 
-  for (let i = 0; i < 9; i++) {
-    pic = `https://picsum.photos/150/150?random=${i}`;
-    userPicArray.push(pic);
-  }
 
   // Get posts
 
@@ -108,39 +108,60 @@ export const AppData = ({ children }) => {
     }
   }, []);
 
-  // Random user per Post
+  // Random post user array
 
-  const randomNumbArray = [];
+  
 
-  while (randomNumbArray.length < 31) {
-    let randomNumberPostUser = Math.floor(
-      Math.random() * (USERS.length - 1) + 1
-    );
-    if (randomNumbArray.indexOf(randomNumberPostUser === -1)) {
-      randomNumbArray.push(randomNumberPostUser);
+  useEffect(() => {
+    let randomNumbArray = []
+    while (randomNumbArray.length < 31) {
+      let randomNumberPostUser = Math.floor(
+        Math.random() * (usersLength - 1) + 1
+      );
+      if (randomNumbArray.indexOf(randomNumberPostUser === -1)) {
+        randomNumbArray.push(randomNumberPostUser);
+      }
     }
-  }
+    setNumbArray(prevState => prevState = randomNumbArray)
+  }, [usersLength]);
+
+  
 
   // Random friends number
 
   useEffect(() => {
     setFriendsNum((prevState) => {
       return (prevState = Math.floor(
-        Math.random() * (USERS.length - 250) + 250
+        Math.random() * (usersLength - 250) + 250
       ));
     });
-  }, []);
+  }, [usersLength, navigate]);
+
+  // Random birthday number
+
+  useEffect(() => {
+    setBirthdayNumb(prevState => prevState = Math.floor(Math.random() * (usersLength - 2) + 2))
+  },[usersLength])
 
   // Go to clicked user
 
-  const navigate = useNavigate();
-
   function handleUser(user) {
     navigate("/user");
-    setclickedUser((prevState) => {
+    setClickedUser((prevState) => {
       return (prevState = user);
     });
   }
+
+    // Get user pictures
+
+    useEffect(() => {
+      const picArray = [];
+      for (let i = 0; i < 9; i++) {
+        const pic = `https://picsum.photos/150/150?random=${clickedUser.userId+i}`;
+        picArray.push(pic);
+      }
+      setUserPicArray(prevState => prevState = picArray)
+    },[navigate])
 
   return (
     <DataContext.Provider
@@ -148,7 +169,8 @@ export const AppData = ({ children }) => {
         USERS,
         userPicArray,
         posts,
-        randomNumbArray,
+        numbArray,
+        birthdayNumb,
         friendsNum,
         handleUser,
         clickedUser,

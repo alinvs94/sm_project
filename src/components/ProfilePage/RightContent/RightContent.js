@@ -95,8 +95,7 @@ export function RightContent() {
                   postData={post}
                   id={post.id}
                   key={post.id}
-                  name={`${clickedUser.name.first} ${clickedUser.name.last}`}
-                  image={clickedUser.picture.large}
+                  user={clickedUser}
                 ></NewsFeed>
               );
             }
