@@ -1,7 +1,7 @@
 {
   "name": "sm-project-vasiliu-alin",
   "version": "0.1.0",
-  "homepage": "https://alinvs94.github.io/sm_project",
+  "homepage": "https://alinvs94.github.io/sm_project/home/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
