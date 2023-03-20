@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Navigation.module.scss";
+import { DataContext } from "./AppData/AppData";
 
 import DiamondIcon from '@mui/icons-material/Diamond';
 
 export function Navigation() {
-
+  const { handleUser, USERS } = useContext(DataContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -14,6 +15,10 @@ export function Navigation() {
 
     setIsLoggedIn((prevState) => !prevState)
   };
+
+  function userClick() {
+    handleUser(USERS[0]);
+  }
 
   return (
       <header>
@@ -24,7 +29,7 @@ export function Navigation() {
         <nav>
           <ul className={styles.menu}>
             <li className={styles.menuItems}>
-              {!isLoggedIn && <NavLink to="/user">Profile</NavLink>}
+              {!isLoggedIn && <NavLink to="/user" onClick={userClick}>Profile</NavLink>}
             </li>
 
             <li className={styles.menuItems}>

@@ -1,6 +1,7 @@
 import styles from "./LinkList.module.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { DataContext } from "../../../AppData/AppData";
 
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
@@ -16,7 +17,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
 export function LinkList() {
-
+  const { handleUser, USERS } = useContext(DataContext);
   const [state, setState] = useState(true);
 
   const toggleList = () => {
@@ -36,13 +37,16 @@ export function LinkList() {
       listText = 'More..'
     }
 
+    function userClick() {
+      handleUser(USERS[0]);
+    }
 
 
   return (
     <div className={styles.linkListContainer}>
       <ul className={styles.linkListElements}>
         <li className={styles.linkListElement}>
-          <Link to="/user">
+          <Link to="/user" onClick={userClick}>
             <img src={require("./images/profile2.jpg")} alt='profileImg'></img>
             <span>My Profile</span>
           </Link>

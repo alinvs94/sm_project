@@ -6,7 +6,7 @@ export function LeftContent() {
   
   return (
     <div className={styles.leftContainer}>
-      <LinkList to="/profile"></LinkList>
+      <LinkList></LinkList>
       <hr />
       <SuggestedSection></SuggestedSection>
     </div>
