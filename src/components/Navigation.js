@@ -22,7 +22,7 @@ export function Navigation() {
 
   return (
       <header>
-        <Link className="linkWrp" to="/" style={{textDecoration:'none'}}>
+        <Link className="linkWrp" to="/home" style={{textDecoration:'none'}}>
           <div className={styles.logo}><DiamondIcon style={{fontSize: '40px', marginTop: '3px', marginRight:'4px'}}></DiamondIcon>What's UP</div>
         </Link>
 

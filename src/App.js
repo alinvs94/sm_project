@@ -11,7 +11,7 @@ function App() {
     <AppData>
       <Layout>
         <Routes>
-          <Route path="/" element={<HomePage></HomePage>}></Route>
+          <Route path="/home" element={<HomePage></HomePage>}></Route>
           <Route path="/auth" element={<AuthPage></AuthPage>}></Route>
           <Route path="/user" element={<UserPage></UserPage>}></Route>
           {/* Varianta Route with params */}

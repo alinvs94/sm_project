@@ -15,6 +15,10 @@ export const AppData = ({ children }) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    navigate('/home');
+  },[])
+
   const alinUser = {
     gender: "male",
     userId: 1,
