@@ -6,8 +6,6 @@ import styles from "./AuthFrm.module.scss";
 
 export function AuthFrm() {
    const [isLogin, setIsLogin] = useState(true);
-   const [isError, setIsError] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
 
    const usernameInputRef = useRef();
    const passwordInputRef = useRef();
@@ -18,33 +16,21 @@ export function AuthFrm() {
       setIsLogin((prevState) => !prevState);
    };
 
-   const submitHandler = (event) => {
+   const submitHandler = async (event) => {
       event.preventDefault();
 
-      let usernameValue = usernameInputRef.current.value;
-      let passwordValue = passwordInputRef.current.value;
-
-      usernameValue = "eve.holt@reqres.in";
-      passwordValue = "cityslicka";
-
-      setIsLoading(true);
+      const usernameValue = usernameInputRef.current.value;
+      const passwordValue = passwordInputRef.current.value;
 
       if (isLogin) {
-         axios
-            .post("https://reqres.in/api/login", {
-               username: usernameValue,
+         const response = await axios.post(
+            "http://127.0.0.1:8000/api/users/login",
+            {
+               email: usernameValue,
                password: passwordValue,
-            })
-            .then((response) => {
-               setIsLoading(false);
-               navigate("/");
-            })
-            .catch((error) => {
-               setIsError(true);
-               setIsLoading(false);
-               usernameInputRef.current.value = "";
-               passwordInputRef.current.value = "";
-            });
+            }
+         );
+         console.log(response.data);
       } else {
          axios
             .post("https://reqres.in/api/register", {
@@ -52,12 +38,9 @@ export function AuthFrm() {
                password: passwordValue,
             })
             .then((response) => {
-               setIsLoading(false);
                navigate("/");
             })
             .catch((error) => {
-               setIsError(true);
-               setIsLoading(false);
                usernameInputRef.current.value = "";
                passwordInputRef.current.value = "";
             });
@@ -66,23 +49,21 @@ export function AuthFrm() {
       navigate("/");
    };
 
-   const actionIsNotLoading = (
-      <button>{isLogin ? "Login" : "Create new account"}</button>
-   );
-
    return (
-      <div className={styles.autentification}>
-         <h1 className="">{isLogin ? "Login" : "Sign up"}</h1>
+      <div
+         className={`${styles.autentification} bg-primary justify-center items-center`}
+      >
+         <h1 className="text-4xl font-bold mb-6">
+            {isLogin ? "Login" : "Sign up"}
+         </h1>
 
-         <form onSubmit={submitHandler}>
+         <form onSubmit={submitHandler} className="w-3/4">
             <div className={`${styles.control}`}>
                <label htmlFor="email">Enter yout email</label>
                <input
-                  className="text-red-600"
                   type="email"
                   id="email"
                   required
-                  placeholder="Enter your email"
                   ref={usernameInputRef}
                ></input>
             </div>
@@ -93,16 +74,18 @@ export function AuthFrm() {
                   type="password"
                   id="password"
                   required
-                  placeholder="Enter your password"
                   ref={passwordInputRef}
                ></input>
             </div>
 
             <div className={styles.actions}>
-               {isError && <p>Please try again</p>}
-               {isLoading && <p>Sending request...</p>}
-               {!isLoading && actionIsNotLoading}
-               <button className={styles.toggle} onClick={toggleAuthState}>
+               <button className={`${styles.toggle} bg-primary`}>
+                  {isLogin ? "Login" : "Create new account"}
+               </button>
+               <button
+                  className={`${styles.toggle} bg-primary`}
+                  onClick={toggleAuthState}
+               >
                   {isLogin
                      ? "Create new account"
                      : "Login with an existing account"}
