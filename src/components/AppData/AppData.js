@@ -12,6 +12,7 @@ export const AppData = ({ children }) => {
   const [numbArray, setNumbArray] = useState();
   const [birthdayNumb, setBirthdayNumb] = useState();
   const [userPicArray, setUserPicArray] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -167,6 +168,19 @@ export const AppData = ({ children }) => {
       setUserPicArray(prevState => prevState = picArray)
     },[navigate])
 
+    const handleLogClick = async (e) => {
+      const buttonValue = e.target.value;
+      if (buttonValue === "Logout") {
+         localStorage.clear("tk");
+         navigate("/auth");
+         setIsLoggedIn(false);
+      } else {
+         navigate("/auth");
+      }
+   };
+
+
+
   return (
     <DataContext.Provider
       value={{
@@ -178,6 +192,9 @@ export const AppData = ({ children }) => {
         friendsNum,
         handleUser,
         clickedUser,
+        handleLogClick,
+        isLoggedIn,
+        setIsLoggedIn
       }}
     >
       {children}
