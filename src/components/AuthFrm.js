@@ -1,14 +1,16 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import styles from "./AuthFrm.module.scss";
+import { DataContext } from "./AppData/AppData";
 
 export function AuthFrm() {
+   const { setIsLoggedIn } = useContext(DataContext);
    const [isLogin, setIsLogin] = useState(true);
 
    const usernameInputRef = useRef();
    const passwordInputRef = useRef();
+   const nameInputRef = useRef();
 
    const navigate = useNavigate();
 
@@ -16,37 +18,42 @@ export function AuthFrm() {
       setIsLogin((prevState) => !prevState);
    };
 
+   useEffect(() => {
+      if (localStorage.getItem("tk")) {
+         navigate("/home");
+      }
+   }, []);
+
    const submitHandler = async (event) => {
       event.preventDefault();
 
       const usernameValue = usernameInputRef.current.value;
       const passwordValue = passwordInputRef.current.value;
-
-      if (isLogin) {
-         const response = await axios.post(
-            "http://127.0.0.1:8000/api/users/login",
-            {
+      try {
+         if (isLogin) {
+            const response = await axios.post("/users/login", {
                email: usernameValue,
                password: passwordValue,
-            }
-         );
-         console.log(response.data);
-      } else {
-         axios
-            .post("https://reqres.in/api/register", {
-               username: usernameValue,
-               password: passwordValue,
-            })
-            .then((response) => {
-               navigate("/");
-            })
-            .catch((error) => {
-               usernameInputRef.current.value = "";
-               passwordInputRef.current.value = "";
             });
+            localStorage.setItem("tk", response.data.plainTextToken);
+            setIsLoggedIn(true);
+            console.log('here');
+            navigate("/home");
+         } else {
+            const nameValue = nameInputRef.current.value;
+            axios
+               .post("/users/register", {
+                  name: nameValue,
+                  email: usernameValue,
+                  password: passwordValue,
+               })
+               .then((response) => {
+                  navigate("/auth");
+               });
+         }
+      } catch (error) {
+         console.log(error);
       }
-
-      navigate("/");
    };
 
    return (
@@ -58,6 +65,20 @@ export function AuthFrm() {
          </h1>
 
          <form onSubmit={submitHandler} className="w-3/4">
+            {!isLogin ? (
+               <div className={styles.control}>
+                  <label htmlFor="name">Enter yout name</label>
+                  <input
+                     type="text"
+                     id="name"
+                     required
+                     ref={nameInputRef}
+                  ></input>
+               </div>
+            ) : (
+               ""
+            )}
+
             <div className={`${styles.control}`}>
                <label htmlFor="email">Enter yout email</label>
                <input
