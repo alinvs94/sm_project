@@ -5,17 +5,8 @@ import { AuthPage } from "./pages/AuthPage";
 import { Layout } from "./components/Layout";
 import { UserPage } from "./pages/UserPage";
 import { AppData } from "./components/AppData/AppData";
-import axios from "axios";
 import CheckLogin from "./components/CheckLogin/CheckLogin";
-
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
-if (localStorage.getItem("tk") !== undefined) {
-   axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem(
-      "__tk"
-   )}`;
-} else {
-   delete axios.defaults.headers["Authorization"];
-}
+import FriendsPage from "./pages/FriendsPage";
 
 function App() {
    return (
@@ -26,6 +17,7 @@ function App() {
                   <Route path="/home" element={<HomePage></HomePage>}></Route>
                   <Route path="/user" element={<UserPage></UserPage>}></Route>
                   <Route path="/auth" element={<AuthPage></AuthPage>}></Route>
+                  <Route path="/friends" element={<FriendsPage></FriendsPage>}></Route>
                </Routes>
             </CheckLogin>
          </Layout>

@@ -13,77 +13,82 @@ import PlaceIcon from "@mui/icons-material/Place";
 import Grid from "@mui/material/Grid";
 
 export function LeftContent() {
-  const { USERS, userPicArray, clickedUser } = useContext(DataContext);
+   const { USERS, userPicArray, clickedUser } = useContext(DataContext);
+   let photo;
 
-  let photo;
+   if (userPicArray) {
+      if (userPicArray.length === 0) {
+         photo = "No pictures yet";
+      } else {
+         photo = userPicArray.map((element, index) => {
+            return (
+               <Grid key={index}>
+                  <PhotosElement key={index} url={element}></PhotosElement>
+               </Grid>
+            );
+         });
+      }
+   }
 
-  if (userPicArray.length === 0) {
-    photo = "No pictures yet";
-  } else {
-    photo = userPicArray.map((element, index) => {
-      return (
-        <Grid key={index}>
-          <PhotosElement key={index} url={element}></PhotosElement>
-        </Grid>
-      );
-    })
-  }
+   return (
+      <div className={styles.leftWrapper}>
+         <div className={styles.biography}>
+            <h1> In short</h1>
+            <p>
+               <SchoolIcon></SchoolIcon> Studied at
+               <Link
+                  className={styles.infoLink}
+               >{`${clickedUser.school_city}`}</Link>
+            </p>
+            <p>
+               <LocationCityIcon></LocationCityIcon> Living in
+               <Link className={styles.infoLink}>{`${clickedUser.city}`}</Link>
+            </p>
+            <p>
+               <PlaceIcon></PlaceIcon> From
+               <Link
+                  className={styles.infoLink}
+               >{`${clickedUser.country}`}</Link>
+            </p>
 
-  return (
-    <div className={styles.leftWrapper}>
-      <div className={styles.biography}>
-        <h1> In short</h1>
-        <p>
-          <SchoolIcon></SchoolIcon> Studied at{" "}
-          <Link className={styles.infoLink}>{`${clickedUser.location.state}`}</Link>
-        </p>
-        <p>
-          <LocationCityIcon></LocationCityIcon> Living in{" "}
-          <Link className={styles.infoLink}>{`${clickedUser.location.city}`}</Link>
-        </p>
-        <p>
-          <PlaceIcon></PlaceIcon> From{" "}
-          <Link className={styles.infoLink}>{`${clickedUser.location.country}`}</Link>
-        </p>
+            <Button variant="contained" className={styles.addInfoButton}>
+               <CreateIcon></CreateIcon>Add some information
+            </Button>
+         </div>
 
-        <Button variant="contained" className={styles.addInfoButton}>
-          <CreateIcon></CreateIcon>Add some information
-        </Button>
+         <div className={styles.photoWrapper}>
+            <h1>Photo</h1>
+            <Grid
+               container
+               className={styles.gridContainer}
+               style={{ gap: "3px 6px" }}
+            >
+               {photo}
+            </Grid>
+         </div>
+
+         <div className={styles.friendsWrapper}>
+            <h1>Friends</h1>
+            <Grid
+               container
+               className={styles.gridContainer}
+               style={{ gap: "3px 6px" }}
+            >
+               {USERS.map((user) => {
+                  if (user.userId < 10) {
+                     return (
+                        <Grid key={user.userId}>
+                           <FriendsElement
+                              key={user.userId}
+                              name={`${user.name}`}
+                              picture={user ? user.picture : ""}
+                           ></FriendsElement>
+                        </Grid>
+                     );
+                  }
+               })}
+            </Grid>
+         </div>
       </div>
-
-      <div className={styles.photoWrapper}>
-        <h1>Photo</h1>
-        <Grid
-          container
-          className={styles.gridContainer}
-          style={{ gap: "3px 6px" }}
-        >
-          {photo}
-        </Grid>
-      </div>
-
-      <div className={styles.friendsWrapper}>
-        <h1>Friends</h1>
-        <Grid
-          container
-          className={styles.gridContainer}
-          style={{ gap: "3px 6px" }}
-        >
-          {USERS.map((user) => {
-            if (user.userId < 10) {
-              return (
-                <Grid key={user.userId}>
-                  <FriendsElement
-                    key={user.userId}
-                    name={`${user.name.first} ${user.name.last}`}
-                    picture={user.picture.large}
-                  ></FriendsElement>
-                </Grid>
-              );
-            }
-          })}
-        </Grid>
-      </div>
-    </div>
-  );
+   );
 }

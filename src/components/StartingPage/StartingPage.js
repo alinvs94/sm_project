@@ -2,23 +2,25 @@ import { LeftContent } from "./LeftContent/LeftContent";
 import { NewsFeed } from "./NewsFeed/NewsFeed";
 import { RightContent } from "./RightContent/RightContent";
 import styles from "./StartingPage.module.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../AppData/AppData";
+import axios from "axios";
 
 export function StartingPage() {
    const { USERS, posts, numbArray } = useContext(DataContext);
+   
 
    return (
       <section className={styles.mainContainer}>
          <aside className={styles.leftContent}>
             <LeftContent></LeftContent>
-         </aside>
+         </aside> 
 
          <div className={styles.newsFeed}>
             {posts.map((post) => {
                if (post.id < 31) {
                   let postUser = USERS.find(
-                     (user) => user.userId === numbArray[post.id]
+                     (user) => user.id === numbArray[post.id]
                   );
                   if (postUser !== undefined) {
                      return (

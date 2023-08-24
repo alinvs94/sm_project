@@ -105,11 +105,11 @@ let today= new Date()
           onClick={userClick}
           >
             <img
-              src={props.user.picture.large}
+              src={props.user.picture}
               alt="ProfilePic"
               className={styles.profilePictureImg}
             ></img>
-            <span className={styles.username}>{`${props.user.name.first} ${props.user.name.last}`}</span>
+            <span className={styles.username}>{`${props.user.name}`}</span>
           </Link>
           <Tooltip title="Show more" placement="left">
             <div className={styles.contextMenu}>

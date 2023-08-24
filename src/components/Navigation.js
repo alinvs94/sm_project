@@ -4,10 +4,11 @@ import styles from "./Navigation.module.scss";
 import { DataContext } from "./AppData/AppData";
 
 import DiamondIcon from "@mui/icons-material/Diamond";
+import axios from "axios";
 
 export function Navigation() {
-   const { handleUser, USERS, isLoggedIn, handleLogClick, setIsLoggedIn } = useContext(DataContext);
-  
+   const { handleUser, USERS, isLoggedIn, handleLogClick, setIsLoggedIn } =
+      useContext(DataContext);
 
    const navigate = useNavigate();
 
@@ -16,12 +17,6 @@ export function Navigation() {
          setIsLoggedIn(true);
       }
    }, []);
-
-   function userClick() {
-      handleUser(USERS[0]);
-   }
-
-  
 
    return (
       <header>
@@ -45,11 +40,7 @@ export function Navigation() {
          <nav>
             <ul className={styles.menu}>
                <li className={styles.menuItems}>
-                  {isLoggedIn && (
-                     <NavLink to="/user" onClick={userClick}>
-                        Profile
-                     </NavLink>
-                  )}
+                  {isLoggedIn && <NavLink to="/user">Profile</NavLink>}
                </li>
 
                <li className={styles.menuItems}>
