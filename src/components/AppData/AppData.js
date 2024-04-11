@@ -174,10 +174,10 @@ export const AppData = ({ children }) => {
    // Go to clicked user
 
    function handleUser(user) {
-      navigate("/user");
-      // setClickedUser((prevState) => {
-      //    return (prevState = user);
-      // });
+      navigate(`/user/${clickedUser.name}`);
+      setClickedUser((prevState) => {
+         return (prevState = user);
+      });
    }
 
    // Get user pictures

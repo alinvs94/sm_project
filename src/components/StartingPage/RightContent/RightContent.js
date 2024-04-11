@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 
 export function RightContent() {
-  const { USERS, birthdayNumb } = useContext(DataContext);
+  const { USERS, birthdayNumb, clickedUser } = useContext(DataContext);
 
   let birthdayUser;
   let chatUser;
@@ -22,13 +22,13 @@ export function RightContent() {
     birthdayUser = { name: { first: "No birthday today" } };
     chatUser = "You've got no friends :(";
   } else {
-    birthdayUser = USERS.find((element) => element.userId === birthdayNumb);
+    birthdayUser = USERS.find((element) => element.id === birthdayNumb);
     chatUser = USERS.map((user) => {
-      if (user.userId > 1 && user.userId <= 15) {
+      if (user.id > 1 && user.id <= 15) {
         return (
           <ChatSection
             user={user}
-            key={user.userId}
+            key={user.id}
           ></ChatSection>
         );
       }
@@ -42,11 +42,12 @@ export function RightContent() {
       {birthdayUser ? (
         <BirthdaySection
           user={birthdayUser}
-          key={birthdayUser.userId}
+          key={birthdayUser.id}
         ></BirthdaySection>
       ) : (
         "Still loading"
       )}
+
       <hr />
       <h1 className={styles.chatTitle}>Contacts</h1>
 

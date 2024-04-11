@@ -8,7 +8,7 @@ export function ChatSection(props) {
   const {handleUser} = useContext(DataContext);
   const user = props.user;
 
-  const profilePic = user.picture.medium;
+  const profilePic = user.picture;
 
   function userClick() {
     handleUser(user);
@@ -17,7 +17,7 @@ export function ChatSection(props) {
   let isOnline;
   let isOffline;
 
-  if (user.userId < 7) {
+  if (user.id < 7) {
     isOnline = "success";
     isOffline = false;
   } else {
@@ -51,7 +51,7 @@ export function ChatSection(props) {
             alt="profPic"
           ></img>
         </Badge>
-        <p className={styles.profileName}>{user.name.first}</p>
+        <p className={styles.profileName}>{user.name}</p>
       </Link>
     </div>
   );

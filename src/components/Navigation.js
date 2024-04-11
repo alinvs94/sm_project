@@ -7,7 +7,7 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import axios from "axios";
 
 export function Navigation() {
-   const { handleUser, USERS, isLoggedIn, handleLogClick, setIsLoggedIn } =
+   const { handleUser, USERS, isLoggedIn, handleLogClick, setIsLoggedIn, clickedUser } =
       useContext(DataContext);
 
    const navigate = useNavigate();
@@ -40,7 +40,7 @@ export function Navigation() {
          <nav>
             <ul className={styles.menu}>
                <li className={styles.menuItems}>
-                  {isLoggedIn && <NavLink to="/user">Profile</NavLink>}
+                  {isLoggedIn && <NavLink to={`/user/${clickedUser.name}`}>Profile</NavLink>}
                </li>
 
                <li className={styles.menuItems}>

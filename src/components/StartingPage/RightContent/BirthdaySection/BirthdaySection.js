@@ -21,7 +21,7 @@ export function BirthdaySection(props) {
 
         <Link
           className={styles.birthdayName}
-        >{`${props.user.name.first} ${props.user.name.last}`}</Link>
+        >{`${props.user.name}`}</Link>
       </div>
     </div>
   );

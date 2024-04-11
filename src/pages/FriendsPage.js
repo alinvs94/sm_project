@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../components/AppData/AppData";
 import axios from "axios";
-import { clear } from "@testing-library/user-event/dist/clear";
 
 export default function FriendsPage() {
    const { USERS, clickedUser, FRIENDS } = useContext(DataContext);

@@ -15,7 +15,7 @@ function App() {
             <CheckLogin>
                <Routes>
                   <Route path="/home" element={<HomePage></HomePage>}></Route>
-                  <Route path="/user" element={<UserPage></UserPage>}></Route>
+                  <Route path="/user/:name" element={<UserPage></UserPage>}></Route>
                   <Route path="/auth" element={<AuthPage></AuthPage>}></Route>
                   <Route path="/friends" element={<FriendsPage></FriendsPage>}></Route>
                </Routes>
