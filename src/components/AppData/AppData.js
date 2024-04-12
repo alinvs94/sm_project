@@ -9,6 +9,7 @@ export const AppData = ({ children }) => {
    const [USERS, setUSERS] = useState([]);
    const [posts, setPosts] = useState([]);
    const [clickedUser, setClickedUser] = useState({});
+   const [loggedUser, setLoggedUser] = useState({});
    const [friendsNum, setFriendsNum] = useState();
    const [numbArray, setNumbArray] = useState();
    const [birthdayNumb, setBirthdayNumb] = useState();
@@ -32,13 +33,12 @@ export const AppData = ({ children }) => {
    }, [isLoggedIn]);
 
    // Get logged user
-
    useEffect(() => {
       const getLoggedUser = async () => {
          if (localStorage.getItem("tk")) {
             try {
                const res = await axios.get("/users/getCurrentUser");
-               setClickedUser(res.data);
+               setLoggedUser(res.data);
             } catch (error) {
                console.log(error);
             }
@@ -46,7 +46,7 @@ export const AppData = ({ children }) => {
       };
 
       getLoggedUser();
-   }, [pathname]);
+   }, []);
 
    // Get all users
 
@@ -62,7 +62,6 @@ export const AppData = ({ children }) => {
 
       getAllUsers();
    }, [pathname]);
-
 
    // Get user friends list
    const [FRIENDS, setFRIENDS] = useState([]);
@@ -174,7 +173,7 @@ export const AppData = ({ children }) => {
    // Go to clicked user
 
    function handleUser(user) {
-      navigate(`/user/${clickedUser.name}`);
+      navigate(`/user/${user.name}`);
       setClickedUser((prevState) => {
          return (prevState = user);
       });
@@ -220,6 +219,7 @@ export const AppData = ({ children }) => {
             isLoggedIn,
             setIsLoggedIn,
             FRIENDS,
+            loggedUser,
          }}
       >
          {children}

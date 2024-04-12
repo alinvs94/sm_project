@@ -17,7 +17,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
 export function LinkList() {
-  const { handleUser, USERS } = useContext(DataContext);
+  const { loggedUser } = useContext(DataContext);
   const [state, setState] = useState(true);
 
   const toggleList = () => {
@@ -37,16 +37,12 @@ export function LinkList() {
       listText = 'More..'
     }
 
-    function userClick() {
-      handleUser(USERS[0]);
-    }
-
 
   return (
     <div className={styles.linkListContainer}>
       <ul className={styles.linkListElements}>
         <li className={styles.linkListElement}>
-          <Link to="/user" onClick={userClick}>
+          <Link to={`/profile/${loggedUser.name}`}>
             <img src={require("./images/profile2.jpg")} alt='profileImg'></img>
             <span>My Profile</span>
           </Link>

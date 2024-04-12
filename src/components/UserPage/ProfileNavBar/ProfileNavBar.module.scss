@@ -1,0 +1,40 @@
+@import '../../assets/variables';
+
+.navBarWrapper {
+  width: 99%;
+  align-self: center;
+  justify-self: center;
+  .navBarContainer {
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 5px 0 5px 0;
+    background-color: $primary;
+
+    .navButtons {
+      font-weight: bold;
+      transition: 0.3s all;
+
+      &:hover {
+        color: $tertiary;
+      }
+    }
+
+    .otherNavButton {
+      color: white;
+      font-weight: bold;
+      font-size: 0.875rem;
+      cursor: pointer;
+      width: inherit;
+      padding: 8px;
+      border-radius: 0.1px;
+      transition: 0.3s all;
+
+      &:hover {
+        background-color: $primary;
+        color: $tertiary;
+      }
+    }
+  }
+}

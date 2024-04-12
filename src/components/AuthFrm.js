@@ -69,7 +69,8 @@ export function AuthFrm() {
                   setIsLogin(true);
                   emailInputRef.current.value = "";
                   passwordInputRef.current.value = "";
-               }).catch((error) => {
+               })
+               .catch((error) => {
                   setError(error.response.data.message);
                });
          }

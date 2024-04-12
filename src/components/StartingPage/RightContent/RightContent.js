@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 
 export function RightContent() {
-  const { USERS, birthdayNumb, clickedUser } = useContext(DataContext);
+  const { USERS, birthdayNumb } = useContext(DataContext);
 
   let birthdayUser;
   let chatUser;

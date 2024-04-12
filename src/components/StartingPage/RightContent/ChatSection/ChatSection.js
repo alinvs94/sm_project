@@ -27,7 +27,7 @@ export function ChatSection(props) {
 
 
   return (
-    <div className={styles.chatSectionContainer} onClick={userClick} to='/user'>
+    <div className={styles.chatSectionContainer} onClick={userClick} >
 
       <Link
         className={`${styles.contactsContainer} ${

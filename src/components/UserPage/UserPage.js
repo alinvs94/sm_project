@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./ProfilePage.module.scss";
+import styles from "./UserPage.module.scss";
 import { FriendsList } from "./FriendsList/FriendsList";
 import { ProfileNavBar } from "./ProfileNavBar/ProfileNavBar";
 import { LeftContent } from "./LeftContent/LeftContent";
@@ -13,8 +13,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateIcon from "@mui/icons-material/Create";
 import { useContext } from "react";
 
-export function ProfilePage() {
-   const { USERS, FRIENDS, loggedUser } = useContext(DataContext);
+export function UserPage() {
+   const { USERS, FRIENDS, clickedUser } = useContext(DataContext);
 
    let friend;
 
@@ -42,7 +42,7 @@ export function ProfilePage() {
             <div className={styles.coverWrapper}>
                <img
                   className={styles.coverPic}
-                  src={`https://picsum.photos/seed/${loggedUser.id}/1100/350`}
+                  src={`https://picsum.photos/seed/${clickedUser.id}/1100/350`}
                   alt="Profile Cover"
                ></img>
 
@@ -59,7 +59,7 @@ export function ProfilePage() {
                <div className={styles.leftHeader}>
                   <img
                      className={styles.profilePic}
-                     src={loggedUser ? loggedUser.picture : "Loading"}
+                     src={clickedUser ? clickedUser.picture : "Loading"}
                      alt="Profile Pic"
                   ></img>
 
@@ -75,7 +75,7 @@ export function ProfilePage() {
                         </Tooltip>
                      </div>
 
-                     <h1>{loggedUser ? `${loggedUser.name}` : "Loading"}</h1>
+                     <h1>{clickedUser ? `${clickedUser.name}` : "Loading"}</h1>
 
                      <div className={styles.friendsCount}>
                         {FRIENDS.length} <h5>friends</h5>
@@ -104,7 +104,7 @@ export function ProfilePage() {
             <hr />
             {/* NavBar */}
 
-            <ProfileNavBar></ProfileNavBar>  
+            <ProfileNavBar></ProfileNavBar>
 
             <div className={styles.profilePageContent}>
                <LeftContent className={styles.leftContent}></LeftContent>

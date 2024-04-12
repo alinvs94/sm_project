@@ -8,13 +8,12 @@ import axios from "axios";
 
 export function StartingPage() {
    const { USERS, posts, numbArray } = useContext(DataContext);
-   
 
    return (
       <section className={styles.mainContainer}>
          <aside className={styles.leftContent}>
             <LeftContent></LeftContent>
-         </aside> 
+         </aside>
 
          <div className={styles.newsFeed}>
             {posts.map((post) => {
