@@ -121,7 +121,7 @@ export const AppData = ({ children }) => {
          (prevState) =>
             (prevState = Math.floor(Math.random() * (friendsNum - 0)))
       );
-   }, []);
+   }, [friendsNum]);
 
    // Go to clicked user
 

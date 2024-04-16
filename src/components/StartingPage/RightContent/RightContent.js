@@ -23,9 +23,7 @@ export function RightContent() {
       birthdayUser = { name: { first: "No birthday today" } };
       chatUser = "You've got no friends :(";
    } else {
-      // birthdayUser = USERS.find((element) => element.id === birthdayNumb);
       birthdayUser = FRIENDS[birthdayNumb];
-      console.log(birthdayNumb);
       chatUser = FRIENDS.map((user) => {
          return <ChatSection user={user} key={user.id}></ChatSection>;
       });

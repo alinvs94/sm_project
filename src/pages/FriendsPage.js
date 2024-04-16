@@ -3,17 +3,19 @@ import { DataContext } from "../components/AppData/AppData";
 import axios from "axios";
 
 export default function FriendsPage() {
-   const { USERS, clickedUser, FRIENDS } = useContext(DataContext);
+   const { USERS, loggedUser, FRIENDS } = useContext(DataContext);
    const [error, setError] = useState("");
 
    const addFriend = async (name, email) => {
       try {
          const res = await axios.post("/friends/add", {
+            "user_id": `${loggedUser.id}`,
             name: name,
             email: email,
-            user_id: clickedUser.id,
          });
+         console.log(res);
       } catch (error) {
+         console.log(error.response.data);
          setError("User already your friend");
       }
    };
