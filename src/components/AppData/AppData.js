@@ -7,10 +7,10 @@ export const DataContext = createContext({});
 
 export const AppData = ({ children }) => {
    const [USERS, setUSERS] = useState([]);
+   const [FRIENDS, setFRIENDS] = useState([]);
    const [posts, setPosts] = useState([]);
    const [clickedUser, setClickedUser] = useState({});
    const [loggedUser, setLoggedUser] = useState({});
-   const [friendsNum, setFriendsNum] = useState();
    const [numbArray, setNumbArray] = useState();
    const [birthdayNumb, setBirthdayNumb] = useState();
    const [userPicArray, setUserPicArray] = useState();
@@ -33,6 +33,7 @@ export const AppData = ({ children }) => {
    }, [isLoggedIn]);
 
    // Get logged user
+
    useEffect(() => {
       const getLoggedUser = async () => {
          if (localStorage.getItem("tk")) {
@@ -65,34 +66,18 @@ export const AppData = ({ children }) => {
 
    // Get user friends list
 
-   const [FRIENDS, setFRIENDS] = useState([]);
-
-   useEffect(() => {
-      const getFRIENDS = async () => {
-         try {
-            const res = await axios.get(`/friends/list/${clickedUser.id}`);
-            setFRIENDS(res.data);
-         } catch (error) {
-            console.log(error);
-         }
-      };
-
-      getFRIENDS();
-   }, [pathname]);
-
    useEffect(() => {
       const getFRIENDSS = async () => {
          try {
             const res = await axios.get(`/friends/list/${loggedUser.id}`);
             setFRIENDS(res.data);
-            console.log(loggedUser.id);
          } catch (error) {
             console.log(error);
          }
       };
 
       getFRIENDSS();
-   }, []);
+   }, [loggedUser]);
 
    // Get posts
 
@@ -127,24 +112,16 @@ export const AppData = ({ children }) => {
       setNumbArray((prevState) => (prevState = randomNumbArray));
    }, [usersLength]);
 
-   // Random friends number
-
-   useEffect(() => {
-      setFriendsNum((prevState) => {
-         return (prevState = Math.floor(
-            Math.random() * (usersLength - 250) + 250
-         ));
-      });
-   }, [usersLength, navigate]);
-
    // Random birthday number
+
+   const friendsNum = FRIENDS.length;
 
    useEffect(() => {
       setBirthdayNumb(
          (prevState) =>
-            (prevState = Math.floor(Math.random() * (usersLength - 2) + 2))
+            (prevState = Math.floor(Math.random() * (friendsNum - 0)))
       );
-   }, [usersLength]);
+   }, []);
 
    // Go to clicked user
 
@@ -187,7 +164,6 @@ export const AppData = ({ children }) => {
             posts,
             numbArray,
             birthdayNumb,
-            friendsNum,
             handleUser,
             clickedUser,
             setClickedUser,

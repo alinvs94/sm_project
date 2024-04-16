@@ -13,62 +13,58 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 
 export function RightContent() {
-  const { USERS, birthdayNumb } = useContext(DataContext);
+   const { FRIENDS, birthdayNumb } = useContext(DataContext);
 
-  let birthdayUser;
-  let chatUser;
+   let birthdayUser;
+   let chatUser;
 
-  if (USERS.length === 0) {
-    birthdayUser = { name: { first: "No birthday today" } };
-    chatUser = "You've got no friends :(";
-  } else {
-    birthdayUser = USERS.find((element) => element.id === birthdayNumb);
-    chatUser = USERS.map((user) => {
-      if (user.id > 1 && user.id <= 15) {
-        return (
-          <ChatSection
-            user={user}
-            key={user.id}
-          ></ChatSection>
-        );
-      }
-    });
-  }
 
-  return (
-    <div className={styles.rightContainer}>
-      <AdsSection></AdsSection>
-      <hr />
-      {birthdayUser ? (
-        <BirthdaySection
-          user={birthdayUser}
-          key={birthdayUser.id}
-        ></BirthdaySection>
-      ) : (
-        "Still loading"
-      )}
+   if (FRIENDS.length === 0) {
+      birthdayUser = { name: { first: "No birthday today" } };
+      chatUser = "You've got no friends :(";
+   } else {
+      // birthdayUser = USERS.find((element) => element.id === birthdayNumb);
+      birthdayUser = FRIENDS[birthdayNumb];
+      console.log(birthdayNumb);
+      chatUser = FRIENDS.map((user) => {
+         return <ChatSection user={user} key={user.id}></ChatSection>;
+      });
+   }
 
-      <hr />
-      <h1 className={styles.chatTitle}>Contacts</h1>
+   return (
+      <div className={styles.rightContainer}>
+         <AdsSection></AdsSection>
+         <hr />
+         {birthdayUser ? (
+            <BirthdaySection
+               user={birthdayUser}
+               key={birthdayUser.id}
+            ></BirthdaySection>
+         ) : (
+            "Still loading"
+         )}
 
-      <div className={styles.chatMenu}>
-        <Link className={styles.chatMenuIcon}>
-          <Tooltip
-            placement="top"
-            disableFocusListener
-            disableTouchListener
-            title="Search"
-          >
-            <SearchIcon className={styles.searchIcon}></SearchIcon>
-          </Tooltip>
-        </Link>
+         <hr />
+         <h1 className={styles.chatTitle}>Contacts</h1>
 
-        <Tooltip placement="top" title="Menu">
-          <MoreHorizIcon className={styles.chatMenuIcon} />
-        </Tooltip>
+         <div className={styles.chatMenu}>
+            <Link className={styles.chatMenuIcon}>
+               <Tooltip
+                  placement="top"
+                  disableFocusListener
+                  disableTouchListener
+                  title="Search"
+               >
+                  <SearchIcon className={styles.searchIcon}></SearchIcon>
+               </Tooltip>
+            </Link>
+
+            <Tooltip placement="top" title="Menu">
+               <MoreHorizIcon className={styles.chatMenuIcon} />
+            </Tooltip>
+         </div>
+
+         <div>{chatUser}</div>
       </div>
-
-      <div>{chatUser}</div>
-    </div>
-  );
+   );
 }

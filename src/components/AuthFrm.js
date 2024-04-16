@@ -49,7 +49,7 @@ export function AuthFrm() {
             setIsLoggedIn(true);
             navigate("/home");
 
-            const res = axios.get("");
+            // const res = axios.get("");
          } else {
             const nameValue = nameInputRef.current.value;
             const cityValue = cityInputRef.current.value;
