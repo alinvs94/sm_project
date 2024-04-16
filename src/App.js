@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { AuthPage } from "./pages/AuthPage";
 import { Layout } from "./components/Layout";
@@ -16,10 +16,20 @@ function App() {
             <CheckLogin>
                <Routes>
                   <Route path="/home" element={<HomePage></HomePage>}></Route>
-                  <Route path="/profile/:name" element={<ProfilePage></ProfilePage>}></Route>
-                  <Route path="/user/:name" element={<UserPage></UserPage>}></Route>
+                  <Route
+                     path="/profile/:name"
+                     element={<ProfilePage></ProfilePage>}
+                  ></Route>
+                  <Route
+                     path="/user/:name"
+                     element={<UserPage></UserPage>}
+                  ></Route>
                   <Route path="/auth" element={<AuthPage></AuthPage>}></Route>
-                  <Route path="/friends" element={<FriendsPage></FriendsPage>}></Route>
+                  <Route
+                     path="/friends"
+                     element={<FriendsPage></FriendsPage>}
+                  ></Route>
+                  <Route path="*" element={<Navigate to="/home" replace />} />
                </Routes>
             </CheckLogin>
          </Layout>

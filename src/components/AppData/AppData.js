@@ -64,6 +64,7 @@ export const AppData = ({ children }) => {
    }, [pathname]);
 
    // Get user friends list
+
    const [FRIENDS, setFRIENDS] = useState([]);
 
    useEffect(() => {
@@ -79,44 +80,19 @@ export const AppData = ({ children }) => {
       getFRIENDS();
    }, [pathname]);
 
-   const alinUser = {
-      gender: "male",
-      userId: 1,
-      name: { title: "Mr", first: "Alin", last: "Vasiliu" },
-      location: {
-         street: { number: 25, name: "Inculet" },
-         city: "Iasi",
-         state: "Northwest ",
-         country: "Romania",
-         postcode: "xxxxx",
-         coordinates: { latitude: "-70.3078", longitude: "7.4370" },
-         timezone: {
-            offset: "+2:00",
-            description: "Romania",
-         },
-      },
-      email: "alin.vsl@example.com",
-      login: {
-         uuid: "bffd34a7-2502-4d01-b956-ea7e8ed761a9",
-         username: "alinvs",
-         password: "123456",
-         salt: "xcl1bh8M",
-         md5: "8d8d67b580fe790cda6ac0780602a37c",
-         sha1: "9834d16c9d7c8884d42985374e6a5579a60e3451",
-         sha256:
-            "e9c4af5db327c9287b498d8117e298434f7d8a22a04434ef18d0197217c08927",
-      },
-      dob: { date: "1994-06-12T04:53:19.756Z", age: 28 },
-      registered: { date: "2013-09-28T10:33:40.147Z", age: 2 },
-      phone: "X84 J06-6682",
-      cell: "I44 X21-7431",
-      id: { name: "SIN", value: "500363700" },
-      picture: {
-         large: img,
-         medium: img,
-      },
-      nat: "RO",
-   };
+   useEffect(() => {
+      const getFRIENDSS = async () => {
+         try {
+            const res = await axios.get(`/friends/list/${loggedUser.id}`);
+            setFRIENDS(res.data);
+            console.log(loggedUser.id);
+         } catch (error) {
+            console.log(error);
+         }
+      };
+
+      getFRIENDSS();
+   }, []);
 
    // Get posts
 
