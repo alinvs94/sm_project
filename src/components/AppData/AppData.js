@@ -65,19 +65,18 @@ export const AppData = ({ children }) => {
    }, [pathname]);
 
    // Get user friends list
+   const getFRIENDS = async () => {
+      try {
+         const res = await axios.get(`/friends/list/${loggedUser.id}`);
+         setFRIENDS(res.data);
+      } catch (error) {
+         console.log(error);
+      }
+   };
 
    useEffect(() => {
-      const getFRIENDSS = async () => {
-         try {
-            const res = await axios.get(`/friends/list/${loggedUser.id}`);
-            setFRIENDS(res.data);
-         } catch (error) {
-            console.log(error);
-         }
-      };
-
-      getFRIENDSS();
-   }, [loggedUser]);
+      getFRIENDS();
+   }, [loggedUser, USERS]);
 
    // Get posts
 
@@ -171,6 +170,7 @@ export const AppData = ({ children }) => {
             isLoggedIn,
             setIsLoggedIn,
             FRIENDS,
+            getFRIENDS,
             loggedUser,
          }}
       >

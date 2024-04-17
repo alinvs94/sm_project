@@ -1,29 +1,34 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../components/AppData/AppData";
+import { Alert } from "@mui/material";
+import Fade from "@mui/material/Fade";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from "axios";
 
 export default function FriendsPage() {
-   const { USERS, loggedUser, FRIENDS } = useContext(DataContext);
-   const [error, setError] = useState("");
+   const { USERS, loggedUser, FRIENDS, getFRIENDS } = useContext(DataContext);
+   const [message, setMessage] = useState(false);
+   const [alert, setAlert] = useState(false);
+
+   const clearMessage = () => {
+      setTimeout(() => {
+         setMessage(false);
+         setAlert(false);
+      }, 2000);
+   };
 
    const addFriend = async (name, email) => {
       try {
-         const res = await axios.post("/friends/add", {
-            "user_id": `${loggedUser.id}`,
+         await axios.post("/friends/add", {
+            user_id: `${loggedUser.id}`,
             name: name,
             email: email,
          });
-         console.log(res);
+         setMessage(true);
       } catch (error) {
          console.log(error.response.data);
-         setError("User already your friend");
+         setAlert(true);
       }
-   };
-
-   const clearError = () => {
-      setTimeout(() => {
-         setError("");
-      }, 2000);
    };
 
    const friendList =
@@ -47,38 +52,59 @@ export default function FriendsPage() {
    const list =
       USERS &&
       USERS.map((user, index) => {
-         return (
-            <div
-               key={index}
-               className="flex grid-cols-2 w-11/12 items-center justify-between mt-2 border p-3 border-gray-400 rounded-md"
-            >
-               <div>
-                  <img src={user.picture} className="w-20 rounded-full"></img>
-                  <div className="flex gap-4 font-bold text-xl  mt-4">
-                     <span>{user.name}</span>
-                     <span hidden>{user.email}</span>
-                     <span>{user.country}</span>
+         const checkFriend = FRIENDS.find((friend) => {
+            return user.email === friend.email;
+         });
+         if (!checkFriend) {
+            return (
+               <div
+                  key={index}
+                  className="flex grid-cols-2 w-11/12 items-center justify-between mt-2 border p-3 border-gray-400 rounded-md"
+               >
+                  <div>
+                     <img
+                        src={user.picture}
+                        className="w-20 rounded-full"
+                        alt="profilePic"
+                     />
+                     <div className="flex gap-4 font-bold text-xl  mt-4">
+                        <span>{user.name}</span>
+                        <span hidden>{user.email}</span>
+                        <span>{user.country}</span>
+                     </div>
+                  </div>
+
+                  <div>
+                     <button
+                        onClick={(e) => {
+                           addFriend(user.name, user.email);
+                           clearMessage();
+                           getFRIENDS();
+                        }}
+                        className="border border-gray-400 p-1 rounded-md text-white bg-primary "
+                     >
+                        Friend Request
+                     </button>
                   </div>
                </div>
-
-               <div>
-                  <button
-                     onClick={(e) => {
-                        addFriend(user.name, user.email);
-                        clearError();
-                     }}
-                     className="border border-gray-400 p-1 rounded-md text-white bg-primary "
-                  >
-                     Friend Request
-                  </button>
-               </div>
-            </div>
-         );
+            );
+         }
+         return null;
       });
 
    return (
-      <div className="flex flex-col w-full items-center justify-center mt-20">
-         <span className="text-red-600 font-bold text-2xl">{error}</span>
+      <div className="flex flex-col w-full items-center justify-center mt-20 relative">
+         <Fade in={message}>
+            <span className="top-20 fixed">
+               <Alert severity="success">Friend added!</Alert>
+            </span>
+         </Fade>
+
+         <Fade in={alert}>
+            <span className="top-20 fixed">
+               <Alert severity="warning">Something went wrong!</Alert>
+            </span>
+         </Fade>
 
          <div className="w-11/12 mt-10">
             <span className="font-bold text-3xl justify-start">
