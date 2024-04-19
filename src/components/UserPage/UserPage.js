@@ -6,45 +6,42 @@ import { LeftContent } from "./LeftContent/LeftContent";
 import { RightContent } from "./RightContent/RightContent";
 import { DataContext } from "../AppData/AppData";
 
-import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import CreateIcon from "@mui/icons-material/Create";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 export function UserPage() {
    const { USERS, FRIENDS, clickedUser, handleUser } = useContext(DataContext);
-   const [friendsList, setFriendsList] = useState({});
-
-   useEffect(() => {
-      const getFriends = async () => {
-         try {
-            const r = await axios.get(`/friends/list/${clickedUser.id}`);
-            console.log(r.data);
-            setFriendsList(r.data);
-         } catch (error) {
-            console.log(error.response.data);
-         }
-      }
-
-      getFriends();
-   }, [handleUser]);
+   const [friendsList, setFriendsList] = useState([]);
+   const [isFriend, setIsFriend] = useState(false);
 
    let friend;
 
-   if (USERS.length === 0) {
-      friend = "You've got no friends";
+   const getFriends = async () => {
+      try {
+         const r = await axios.get(`/friends/list/${clickedUser.id}`);
+         setFriendsList(r.data);
+      } catch (error) {
+         console.log(error.response.data);
+      }
+   };
+   useEffect(() => {
+      
+      getFriends();
+   }, [handleUser]);   
+
+   if (friendsList.length === 0) {
+      friend = "";
    } else {
-      friend = USERS.map((user, index) => {
-         if (user.id < 7) {
+      friend = friendsList.map((friend, index) => {
+         if (index < 7) {
             return (
                <FriendsList
                   key={index}
-                  id={user.id}
-                  name={user.name}
-                  src={user.picture}
+                  friend={friend}
                ></FriendsList>
             );
          }
@@ -61,13 +58,6 @@ export function UserPage() {
                   src={`https://picsum.photos/seed/${clickedUser.id}/1100/350`}
                   alt="Profile Cover"
                ></img>
-
-               <Tooltip title="Click me" placement="top">
-                  <Link className={styles.coverIcon}>
-                     <PhotoCameraIcon></PhotoCameraIcon>
-                     <p>Change your cover</p>
-                  </Link>
-               </Tooltip>
             </div>
 
             {/* Profile Header */}
@@ -80,10 +70,12 @@ export function UserPage() {
                   ></img>
 
                   <div className={styles.profileInfo}>
-                     <h1>{clickedUser ? `${clickedUser.name}` : "Loading"}</h1>
+                     <span className="text-4xl font-extrabold">
+                        {clickedUser ? `${clickedUser.name}` : "Loading"}
+                     </span>
 
                      <div className={styles.friendsCount}>
-                        {FRIENDS.length} <h5>friends</h5>
+                        {friendsList.length === 0 ? <span className="text-lg mt-3">No Friends</span> :  <span className="flex gap-1">{friendsList.length} <h5>{friendsList.length > 1 ? "friends" : "friend"}</h5></span>}
                      </div>
 
                      <div className={styles.friendsList}>{friend}</div>
@@ -95,13 +87,13 @@ export function UserPage() {
                      variant="contained"
                      className={styles.rightHeaderButton}
                   >
-                     <AddIcon></AddIcon>Add a story
+                     <AddIcon></AddIcon>Add Friend
                   </Button>
                   <Button
                      variant="contained"
                      className={styles.rightHeaderButton}
                   >
-                     <CreateIcon></CreateIcon>Profile settings
+                     <WhatsAppIcon></WhatsAppIcon>Message
                   </Button>
                </div>
             </div>
