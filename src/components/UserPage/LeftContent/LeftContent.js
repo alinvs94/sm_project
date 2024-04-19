@@ -5,15 +5,13 @@ import { FriendsElement } from "./FriendsElement/FriendsElement";
 import { useContext } from "react";
 import { DataContext } from "../../AppData/AppData";
 
-import Button from "@mui/material/Button";
-import CreateIcon from "@mui/icons-material/Create";
 import SchoolIcon from "@mui/icons-material/School";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import PlaceIcon from "@mui/icons-material/Place";
 import Grid from "@mui/material/Grid";
 
 export function LeftContent() {
-   const { USERS, userPicArray, loggedUser } = useContext(DataContext);
+   const { USERS, userPicArray, clickedUser } = useContext(DataContext);
    let photo;
 
    if (userPicArray) {
@@ -38,22 +36,18 @@ export function LeftContent() {
                <SchoolIcon></SchoolIcon> Studied at
                <Link
                   className={styles.infoLink}
-               >{`${loggedUser.school_city}`}</Link>
+               >{`${clickedUser.school_city}`}</Link>
             </p>
             <p>
                <LocationCityIcon></LocationCityIcon> Living in
-               <Link className={styles.infoLink}>{`${loggedUser.city}`}</Link>
+               <Link className={styles.infoLink}>{`${clickedUser.city}`}</Link>
             </p>
             <p>
                <PlaceIcon></PlaceIcon> From
                <Link
                   className={styles.infoLink}
-               >{`${loggedUser.country}`}</Link>
+               >{`${clickedUser.country}`}</Link>
             </p>
-
-            <Button variant="contained" className={styles.addInfoButton}>
-               <CreateIcon></CreateIcon>Add some information
-            </Button>
          </div>
 
          <div className={styles.photoWrapper}>
