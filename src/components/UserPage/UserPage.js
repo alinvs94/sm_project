@@ -11,10 +11,26 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CreateIcon from "@mui/icons-material/Create";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 export function UserPage() {
-   const { USERS, FRIENDS, clickedUser } = useContext(DataContext);
+   const { USERS, FRIENDS, clickedUser, handleUser } = useContext(DataContext);
+   const [friendsList, setFriendsList] = useState({});
+
+   useEffect(() => {
+      const getFriends = async () => {
+         try {
+            const r = await axios.get(`/friends/list/${clickedUser.id}`);
+            console.log(r.data);
+            setFriendsList(r.data);
+         } catch (error) {
+            console.log(error.response.data);
+         }
+      }
+
+      getFriends();
+   }, [handleUser]);
 
    let friend;
 
@@ -64,17 +80,6 @@ export function UserPage() {
                   ></img>
 
                   <div className={styles.profileInfo}>
-                     <div>
-                        <Tooltip
-                           title="Change Profile Photo"
-                           placement="bottom"
-                        >
-                           <Link className={styles.photoIcon}>
-                              <PhotoCameraIcon></PhotoCameraIcon>
-                           </Link>
-                        </Tooltip>
-                     </div>
-
                      <h1>{clickedUser ? `${clickedUser.name}` : "Loading"}</h1>
 
                      <div className={styles.friendsCount}>
