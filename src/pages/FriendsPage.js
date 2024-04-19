@@ -2,11 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../components/AppData/AppData";
 import { Alert } from "@mui/material";
 import Fade from "@mui/material/Fade";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function FriendsPage() {
-   const { USERS, loggedUser, FRIENDS, getFRIENDS } = useContext(DataContext);
+   const { USERS, loggedUser, FRIENDS, getFRIENDS, handleUser } =
+      useContext(DataContext);
    const [message, setMessage] = useState(false);
    const [alert, setAlert] = useState(false);
 
@@ -31,20 +32,59 @@ export default function FriendsPage() {
       }
    };
 
+   const removeFriend = async (user_id, email) => {
+      try {
+         await axios.post("/friends/remove", {
+            user_id: user_id,
+            email: email,
+         });
+         setMessage(true);
+      } catch (error) {
+         console.log(error.response.data);
+         setAlert(true);
+      }
+   };
+
    const friendList =
       FRIENDS &&
       FRIENDS.map((friend, index) => {
+         const user = USERS.find((user) => friend.email === user.email);
          return (
             <div
                key={index}
-               className="flex grid-cols-2 w-11/12 items-center justify-between mt-2 border p-3 border-gray-400 rounded-md"
+               className="flex flex-col items-center justify-between mt-2 border p-3 border-gray-300 rounded-md bg-secondary"
             >
-               <div>
-                  <div className="flex gap-4 font-bold text-xl  mt-4">
-                     <span>{friend.name}</span>
-                     <span hidden>{friend.email}</span>
+               <div className="flex flex-col items-center">
+                  <img
+                     src={user.picture}
+                     className="w-40 rounded hover:opacity-80 cursor-pointer"
+                     alt="profilePic"
+                     onClick={(e) => {
+                        handleUser(user);
+                     }}
+                  />
+
+                  <div className="flex gap-4 font-bold text-xl mt-4">
+                     <span
+                        className="hover:text-quaternary cursor-pointer"
+                        onClick={(e) => {
+                           handleUser(user);
+                        }}
+                     >
+                        {friend.name}
+                     </span>
                   </div>
                </div>
+               <button
+                  onClick={(e) => {
+                     removeFriend(friend.user_id, friend.email);
+                     clearMessage();
+                     getFRIENDS();
+                  }}
+                  className="border border-gray-400 p-1 rounded-md text-white text-lg font-bold bg-primary hover:bg-quaternary "
+               >
+                  Unfriend
+               </button>
             </div>
          );
       });
@@ -55,22 +95,30 @@ export default function FriendsPage() {
          const checkFriend = FRIENDS.find((friend) => {
             return user.email === friend.email;
          });
-         if (!checkFriend) {
+         if (!checkFriend && user.email !== loggedUser.email) {
             return (
                <div
                   key={index}
-                  className="flex grid-cols-2 w-11/12 items-center justify-between mt-2 border p-3 border-gray-400 rounded-md"
+                  className="flex grid-cols- items-center justify-between mt-2 border p-3 border-gray-300 rounded-md bg-secondary"
                >
                   <div>
                      <img
                         src={user.picture}
-                        className="w-20 rounded-full"
+                        className="w-20 rounded-full hover:opacity-80 cursor-pointer"
                         alt="profilePic"
+                        onClick={(e) => {
+                           handleUser(user);
+                        }}
                      />
                      <div className="flex gap-4 font-bold text-xl  mt-4">
-                        <span>{user.name}</span>
-                        <span hidden>{user.email}</span>
-                        <span>{user.country}</span>
+                        <span
+                           className="hover:text-quaternary cursor-pointer"
+                           onClick={(e) => {
+                              handleUser(user);
+                           }}
+                        >
+                           {user.name}
+                        </span>
                      </div>
                   </div>
 
@@ -81,9 +129,9 @@ export default function FriendsPage() {
                            clearMessage();
                            getFRIENDS();
                         }}
-                        className="border border-gray-400 p-1 rounded-md text-white bg-primary "
+                        className="border border-gray-400 p-1 rounded-md text-white text-lg font-bold bg-primary hover:bg-quaternary "
                      >
-                        Friend Request
+                        Add Friend
                      </button>
                   </div>
                </div>
@@ -93,10 +141,10 @@ export default function FriendsPage() {
       });
 
    return (
-      <div className="flex flex-col w-full items-center justify-center mt-20 relative">
+      <div className="flex flex-col items-center justify-center mt-20 relative">
          <Fade in={message}>
             <span className="top-20 fixed">
-               <Alert severity="success">Friend added!</Alert>
+               <Alert severity="success">Success!</Alert>
             </span>
          </Fade>
 
@@ -107,15 +155,15 @@ export default function FriendsPage() {
          </Fade>
 
          <div className="w-11/12 mt-10">
-            <span className="font-bold text-3xl justify-start">
+            <span className="font-bold text-3xl justify-start text-primary">
                {FRIENDS.length > 0
                   ? "Your friends list"
                   : "You've got no friends"}
             </span>
-            {friendList}
+            <div className="grid grid-cols-6 gap-2">{friendList}</div>
          </div>
          <div className="w-11/12 mt-10">
-            <span className="font-bold text-3xl justify-start">
+            <span className="font-bold text-3xl justify-start text-primary">
                Someone you may know
             </span>
             {list}
