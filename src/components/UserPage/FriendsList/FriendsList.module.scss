@@ -1,8 +1,9 @@
 .friendPic {
   width: 45px;
+  position: relative;
   border-radius: 50%;
-  margin-left: -15px;
-  border: 2px solid white;
+
+  border: 2px solid lightgray;
   background-color: lightgrey;
   &:hover {
     opacity: 1.2;
