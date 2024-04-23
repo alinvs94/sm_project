@@ -14,14 +14,14 @@ import CreateIcon from "@mui/icons-material/Create";
 import { useContext } from "react";
 
 export function ProfilePage() {
-   const { USERS, FRIENDS, loggedUser } = useContext(DataContext);
+   const { usersList, FRIENDS, loggedUser } = useContext(DataContext);
 
    let friend;
 
-   if (USERS.length === 0) {
+   if (usersList.length === 0) {
       friend = "You've got no friends";
    } else {
-      friend = USERS.map((user, index) => {
+      friend = usersList.map((user, index) => {
          if (user.id < 7) {
             return (
                <FriendsList
@@ -111,7 +111,6 @@ export function ProfilePage() {
 
                <RightContent
                   className={styles.rightContent}
-                  USERS={USERS}
                ></RightContent>
             </div>
          </div>

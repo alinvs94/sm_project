@@ -7,7 +7,7 @@ import { DataContext } from "../AppData/AppData";
 import axios from "axios";
 
 export function StartingPage() {
-   const { USERS, posts, numbArray } = useContext(DataContext);
+   const { usersList, posts, numbArray } = useContext(DataContext);
 
    return (
       <section className={styles.mainContainer}>
@@ -18,7 +18,7 @@ export function StartingPage() {
          <div className={styles.newsFeed}>
             {posts.map((post) => {
                if (post.id < 31) {
-                  let postUser = USERS.find(
+                  let postUser = usersList.find(
                      (user) => user.id === numbArray[post.id]
                   );
                   if (postUser !== undefined) {
