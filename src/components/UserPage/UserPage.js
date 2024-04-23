@@ -14,19 +14,14 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 export function UserPage() {
-   const { USERS, FRIENDS, clickedUser, handleUser } = useContext(DataContext);
-   const [friendsList, setFriendsList] = useState([]);
+   const { friendsList, clickedUser, handleUser } = useContext(DataContext);
+   // const [friendsList, setFriendsList] = useState([]);
    const [isFriend, setIsFriend] = useState(false);
 
    let friend;
 
    const getFriends = async () => {
-      try {
-         const r = await axios.get(`/friends/list/${clickedUser.id}`);
-         setFriendsList(r.data);
-      } catch (error) {
-         console.log(error.response.data);
-      }
+  
    };
    useEffect(() => {
       
@@ -108,7 +103,6 @@ export function UserPage() {
 
                <RightContent
                   className={styles.rightContent}
-                  USERS={USERS}
                ></RightContent>
             </div>
          </div>

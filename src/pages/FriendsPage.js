@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function FriendsPage() {
-   const { USERS, loggedUser, FRIENDS, getFRIENDS, handleUser } =
+   const { usersList, loggedUser, friendsList, handleUser } =
       useContext(DataContext);
    const [message, setMessage] = useState(false);
    const [alert, setAlert] = useState(false);
@@ -20,7 +20,7 @@ export default function FriendsPage() {
 
    const addFriend = async (name, email) => {
       try {
-         await axios.post("/friends/add", {
+         await axios.post("/friend/add", {
             user_id: `${loggedUser.id}`,
             name: name,
             email: email,
@@ -34,7 +34,7 @@ export default function FriendsPage() {
 
    const removeFriend = async (user_id, email) => {
       try {
-         await axios.post("/friends/remove", {
+         await axios.post("/friend/remove", {
             user_id: user_id,
             email: email,
          });
@@ -45,10 +45,10 @@ export default function FriendsPage() {
       }
    };
 
-   const friendList =
-      FRIENDS &&
-      FRIENDS.map((friend, index) => {
-         const user = USERS.find((user) => friend.email === user.email);
+   const friendsListElement =
+      friendsList &&
+      friendsList.map((friend, index) => {
+         const user = usersList.find((user) => friend.email === user.email);
          return (
             <div
                key={index}
@@ -79,7 +79,6 @@ export default function FriendsPage() {
                   onClick={(e) => {
                      removeFriend(friend.user_id, friend.email);
                      clearMessage();
-                     getFRIENDS();
                   }}
                   className="border border-gray-400 p-1 rounded-md text-white text-lg font-bold bg-primary hover:bg-quaternary "
                >
@@ -90,9 +89,9 @@ export default function FriendsPage() {
       });
 
    const list =
-      USERS &&
-      USERS.map((user, index) => {
-         const checkFriend = FRIENDS.find((friend) => {
+      usersList &&
+      usersList.map((user, index) => {
+         const checkFriend = friendsList.find((friend) => {
             return user.email === friend.email;
          });
          if (!checkFriend && user.email !== loggedUser.email) {
@@ -127,7 +126,6 @@ export default function FriendsPage() {
                         onClick={(e) => {
                            addFriend(user.name, user.email);
                            clearMessage();
-                           getFRIENDS();
                         }}
                         className="border border-gray-400 p-1 rounded-md text-white text-lg font-bold bg-primary hover:bg-quaternary "
                      >
@@ -156,11 +154,11 @@ export default function FriendsPage() {
 
          <div className="w-11/12 mt-10">
             <span className="font-bold text-3xl justify-start text-primary">
-               {FRIENDS.length > 0
+               {friendsList.length > 0
                   ? "Your friends list"
                   : "You've got no friends"}
             </span>
-            <div className="grid grid-cols-6 gap-2">{friendList}</div>
+            <div className="grid grid-cols-6 gap-2">{friendsListElement}</div>
          </div>
          <div className="w-11/12 mt-10">
             <span className="font-bold text-3xl justify-start text-primary">
