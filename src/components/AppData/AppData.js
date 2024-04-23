@@ -1,13 +1,12 @@
 import { useState, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import img from "../ProfilePage/assets/userProfile.jpg";
 import axios from "axios";
 
 export const DataContext = createContext({});
 
 export const AppData = ({ children }) => {
-   const [USERS, setUSERS] = useState([]);
-   const [FRIENDS, setFRIENDS] = useState([]);
+   const [usersList, setUsersList] = useState([]);
+   const [friendsList, setFriendsList] = useState([]);
    const [posts, setPosts] = useState([]);
    const [clickedUser, setClickedUser] = useState({});
    const [loggedUser, setLoggedUser] = useState({});
@@ -32,51 +31,46 @@ export const AppData = ({ children }) => {
       }
    }, [isLoggedIn]);
 
+   // Get all users
+
+   useEffect(() => {
+      const getAllUsers = async () => {
+         try {
+            const res = await axios.get("/user/index");
+            setUsersList(res.data);
+         } catch (error) {
+            console.log(error.response.data.message);
+         }
+      };
+      getAllUsers();
+   }, []);
+
    // Get logged user
 
    useEffect(() => {
       const getLoggedUser = async () => {
          if (localStorage.getItem("tk")) {
             try {
-               const res = await axios.get("/users/getCurrentUser");
+               const res = await axios.get("/user/getCurrentUser");
                setLoggedUser(res.data);
+
+               const friends = await res.data.friends_list.map((friend) => {
+                  const element =
+                     usersList &&
+                     usersList.find((user) => {
+                        return friend.friend_id === user.id;
+                     });
+                  return element;
+               });
+               setFriendsList(friends);
             } catch (error) {
-               console.log(error);
+               console.log(error.response.data.message);
             }
          }
       };
 
       getLoggedUser();
-   }, []);
-
-   // Get all users
-
-   useEffect(() => {
-      const getAllUsers = async () => {
-         try {
-            const res = await axios.get("/users/index");
-            setUSERS(res.data);
-         } catch (error) {
-            console.log(error);
-         }
-      };
-
-      getAllUsers();
-   }, [pathname]);
-
-   // Get user friends list
-   const getFRIENDS = async () => {
-      try {
-         const res = await axios.get(`/friends/list/${loggedUser.id}`);
-         setFRIENDS(res.data);
-      } catch (error) {
-         console.log(error);
-      }
-   };
-
-   useEffect(() => {
-      getFRIENDS();
-   }, [loggedUser, USERS]);
+   }, [usersList]);
 
    // Get posts
 
@@ -94,7 +88,7 @@ export const AppData = ({ children }) => {
       }
    }, []);
 
-   const usersLength = USERS ? USERS.length : undefined;
+   const usersLength = usersList ? usersList.length : undefined;
 
    // Random post user array
 
@@ -113,7 +107,7 @@ export const AppData = ({ children }) => {
 
    // Random birthday number
 
-   const friendsNum = FRIENDS.length;
+   const friendsNum = 0;
 
    useEffect(() => {
       setBirthdayNumb(
@@ -158,7 +152,8 @@ export const AppData = ({ children }) => {
    return (
       <DataContext.Provider
          value={{
-            USERS,
+            usersList,
+            friendsList,
             userPicArray,
             posts,
             numbArray,
@@ -169,8 +164,6 @@ export const AppData = ({ children }) => {
             handleLogClick,
             isLoggedIn,
             setIsLoggedIn,
-            FRIENDS,
-            getFRIENDS,
             loggedUser,
          }}
       >
