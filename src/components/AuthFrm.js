@@ -41,7 +41,7 @@ export function AuthFrm() {
       const passwordValue = passwordInputRef.current.value;
       try {
          if (isLogin) {
-            const response = await axios.post("/users/login", {
+            const response = await axios.post("/user/login", {
                email: emailValue,
                password: passwordValue,
             });
@@ -56,7 +56,7 @@ export function AuthFrm() {
             const countryValue = countryInputRef.current.value;
             const schoolCityValue = schoolCityInputRef.current.value;
             axios
-               .post("/users/register", {
+               .post("/user/register", {
                   name: nameValue,
                   email: emailValue,
                   password: passwordValue,
