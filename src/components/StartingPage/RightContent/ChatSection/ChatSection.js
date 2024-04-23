@@ -7,28 +7,12 @@ import axios from "axios";
 
 export function ChatSection(props) {
    const { handleUser } = useContext(DataContext);
-   const [profilePic, setProfilePic] = useState();
    const user = props.user;
+   console.log(user);
 
    function userClick() {
       handleUser(user);
    }
-   
-
-   useEffect(() => {
-      const fetchFriend = async () => {
-         try {
-            const res = await axios.get("/users/getUser", { params: { email: user.email } });
-            setProfilePic((prevState) =>{
-              return prevState = res.data.picture;
-            }) 
-         } catch (error) {
-            console.log(error);
-         }
-      };
-
-      fetchFriend();
-   }, []);
 
    return (
       <div className={styles.chatSectionContainer} onClick={userClick}>
@@ -45,7 +29,7 @@ export function ChatSection(props) {
             >
                <img
             className={styles.profilePicture}
-            srcSet={`${profilePic}`}
+            srcSet={`${user.picture}`}
             alt="profPic"
           ></img>
             </Badge>

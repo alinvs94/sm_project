@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AdsSection } from "./AdsSection/AdsSection";
 import { BirthdaySection } from "./BirthdaySection/BirthdaySection";
 import { ChatSection } from "./ChatSection/ChatSection";
@@ -13,21 +13,32 @@ import Tooltip from "@mui/material/Tooltip";
 import React from "react";
 
 export function RightContent() {
-   const { FRIENDS, birthdayNumb } = useContext(DataContext);
+   const { usersList, birthdayNumb, friendsList } = useContext(DataContext);
+   const [chatUsers, setChatUsers] = useState();
+
+   // console.log(friendsList);
 
    let birthdayUser;
-   let chatUser;
 
+   console.log(friendsList);
+   const loadChat = async () => {
+      if (friendsList.length === 0) {
+         birthdayUser = { name: { first: "No birthday today" } };
+         setChatUsers("You've got no friends :(");
+      } else {
+         birthdayUser = friendsList[birthdayNumb];
+         const chatElement = await friendsList.map((user, index) => {
+            console.log("here");
+            return <ChatSection user={user} key={index}></ChatSection>;
+         });
+         console.log(chatElement);
+         setChatUsers(chatElement);
+      }
+   };
 
-   if (FRIENDS.length === 0) {
-      birthdayUser = { name: { first: "No birthday today" } };
-      chatUser = "You've got no friends :(";
-   } else {
-      birthdayUser = FRIENDS[birthdayNumb];
-      chatUser = FRIENDS.map((user) => {
-         return <ChatSection user={user} key={user.id}></ChatSection>;
-      });
-   }
+   useEffect(() => {
+      loadChat();
+   }, [usersList]);
 
    return (
       <div className={styles.rightContainer}>
@@ -62,7 +73,7 @@ export function RightContent() {
             </Tooltip>
          </div>
 
-         <div>{chatUser}</div>
+         <div>{chatUsers}</div>
       </div>
    );
 }
