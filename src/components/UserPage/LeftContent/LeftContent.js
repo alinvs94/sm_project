@@ -11,7 +11,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import Grid from "@mui/material/Grid";
 
 export function LeftContent() {
-   const { USERS, userPicArray, clickedUser } = useContext(DataContext);
+   const { userPicArray, clickedUser } = useContext(DataContext);
    let photo;
 
    if (userPicArray) {
@@ -68,7 +68,7 @@ export function LeftContent() {
                className={styles.gridContainer}
                style={{ gap: "3px 6px" }}
             >
-               {USERS.map((user) => {
+               {/* {users.map((user) => {
                   if (user.userId < 10) {
                      return (
                         <Grid key={user.userId}>
@@ -80,7 +80,7 @@ export function LeftContent() {
                         </Grid>
                      );
                   }
-               })}
+               })} */}
             </Grid>
          </div>
       </div>

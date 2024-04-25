@@ -6,9 +6,6 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../AppData/AppData";
 
 export function FriendsList({ friend }) {
-   const { USERS } = useContext(DataContext);
-
-   const friendData = USERS.find((user) => friend.email === user.email);
 
    return (
       <>
@@ -17,7 +14,7 @@ export function FriendsList({ friend }) {
                <img
                   className={styles.friendPic}
                   alt="Friend Pic"
-                  src={friendData && friendData.picture}
+                  src={friend && friend.picture}
                ></img>
             </Link>
          </Tooltip>
