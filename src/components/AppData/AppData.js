@@ -14,6 +14,7 @@ export const AppData = ({ children }) => {
    const [birthdayNumb, setBirthdayNumb] = useState();
    const [userPicArray, setUserPicArray] = useState();
    const [isLoggedIn, setIsLoggedIn] = useState(false);
+   const [clickState, setClickState] = useState(false);
    const pathname = window.location.pathname;
 
    const navigate = useNavigate();
@@ -54,15 +55,7 @@ export const AppData = ({ children }) => {
                const res = await axios.get("/user/getCurrentUser");
                setLoggedUser(res.data);
 
-               const friends = await res.data.friends_list.map((friend) => {
-                  const element =
-                     usersList &&
-                     usersList.find((user) => {
-                        return friend.friend_id === user.id;
-                     });
-                  return element;
-               });
-               setFriendsList(friends);
+               setFriendsList(res.data.friends_list);
             } catch (error) {
                console.log(error.response.data.message);
             }
@@ -70,7 +63,13 @@ export const AppData = ({ children }) => {
       };
 
       getLoggedUser();
-   }, [usersList]);
+   }, [usersList, clickState]);
+
+   // Handle Click
+
+   const handleClick = () => {
+      setClickState(!clickState);
+   };
 
    // Get posts
 
@@ -165,6 +164,7 @@ export const AppData = ({ children }) => {
             isLoggedIn,
             setIsLoggedIn,
             loggedUser,
+            handleClick,
          }}
       >
          {children}
