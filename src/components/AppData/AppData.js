@@ -15,22 +15,30 @@ export const AppData = ({ children }) => {
    const [userPicArray, setUserPicArray] = useState();
    const [isLoggedIn, setIsLoggedIn] = useState(false);
    const [clickState, setClickState] = useState(false);
-   const pathname = window.location.pathname;
 
    const navigate = useNavigate();
 
    // Set axios headers
 
    axios.defaults.baseURL = "http://127.0.0.1:8000/api";
-   useEffect(() => {
-      if (localStorage.getItem("tk") !== undefined) {
-         axios.defaults.headers[
-            "Authorization"
-         ] = `Bearer ${localStorage.getItem("tk")}`;
-      } else {
-         delete axios.defaults.headers["Authorization"];
-      }
-   }, [isLoggedIn]);
+   
+   if (localStorage.getItem("tk") !== undefined) {
+      axios.defaults.headers[
+         "Authorization"
+      ] = `Bearer ${localStorage.getItem("tk")}`;
+   } else {
+      delete axios.defaults.headers["Authorization"];
+   }
+   
+   // useEffect(() => {
+   //    if (localStorage.getItem("tk") !== undefined) {
+   //       axios.defaults.headers[
+   //          "Authorization"
+   //       ] = `Bearer ${localStorage.getItem("tk")}`;
+   //    } else {
+   //       delete axios.defaults.headers["Authorization"];
+   //    }
+   // }, [isLoggedIn,]);
 
    // Get all users
 
@@ -118,7 +126,7 @@ export const AppData = ({ children }) => {
    // Go to clicked user
 
    function handleUser(user) {
-      navigate(`/user/${user.name}`);
+      navigate(`/user/${user.name}/${user.id}`);
       setClickedUser((prevState) => {
          return (prevState = user);
       });
