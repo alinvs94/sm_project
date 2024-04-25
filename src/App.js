@@ -21,7 +21,7 @@ function App() {
                      element={<ProfilePage></ProfilePage>}
                   ></Route>
                   <Route
-                     path="/user/:name"
+                     path="/user/:userName/:userId"
                      element={<UserPage></UserPage>}
                   ></Route>
                   <Route path="/auth" element={<AuthPage></AuthPage>}></Route>
