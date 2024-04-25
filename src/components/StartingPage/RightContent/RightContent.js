@@ -25,7 +25,7 @@ export function RightContent() {
          });
          setChatUsers(chatElement);
       } else {
-         birthdayUser = { name: "No birthday today" };
+         setBirthdayUser({ name: "No birthday today" });
          setChatUsers("You've got no friends :(");
       }
    };
