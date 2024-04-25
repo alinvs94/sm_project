@@ -15,30 +15,24 @@ import React from "react";
 export function RightContent() {
    const { usersList, birthdayNumb, friendsList } = useContext(DataContext);
    const [chatUsers, setChatUsers] = useState();
+   const [birthdayUser, setBirthdayUser] = useState();
 
-   // console.log(friendsList);
-
-   let birthdayUser;
-
-   console.log(friendsList);
    const loadChat = async () => {
-      if (friendsList.length === 0) {
-         birthdayUser = { name: { first: "No birthday today" } };
-         setChatUsers("You've got no friends :(");
-      } else {
-         birthdayUser = friendsList[birthdayNumb];
+      if (friendsList && friendsList.length > 0) {
+         setBirthdayUser(friendsList[birthdayNumb]);
          const chatElement = await friendsList.map((user, index) => {
-            console.log("here");
             return <ChatSection user={user} key={index}></ChatSection>;
          });
-         console.log(chatElement);
          setChatUsers(chatElement);
+      } else {
+         birthdayUser = { name: "No birthday today" };
+         setChatUsers("You've got no friends :(");
       }
    };
 
    useEffect(() => {
       loadChat();
-   }, [usersList]);
+   }, [friendsList]);
 
    return (
       <div className={styles.rightContainer}>
