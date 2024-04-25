@@ -15,7 +15,6 @@ import axios from "axios";
 
 export function UserPage() {
    const { friendsList, clickedUser, handleUser } = useContext(DataContext);
-   // const [friendsList, setFriendsList] = useState([]);
    const [isFriend, setIsFriend] = useState(false);
 
    let friend;

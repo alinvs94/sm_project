@@ -8,7 +8,6 @@ import axios from "axios";
 export function ChatSection(props) {
    const { handleUser } = useContext(DataContext);
    const user = props.user;
-   console.log(user);
 
    function userClick() {
       handleUser(user);

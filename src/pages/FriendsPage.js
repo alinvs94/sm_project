@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function FriendsPage() {
-   const { usersList, loggedUser, friendsList, handleUser } =
+   const { usersList, loggedUser, friendsList, handleUser, handleClick } =
       useContext(DataContext);
    const [message, setMessage] = useState(false);
    const [alert, setAlert] = useState(false);
@@ -18,29 +18,28 @@ export default function FriendsPage() {
       }, 2000);
    };
 
-   const addFriend = async (name, email) => {
+   const addFriend = async (friend_id) => {
       try {
          await axios.post("/friend/add", {
             user_id: `${loggedUser.id}`,
-            name: name,
-            email: email,
+            friend_id: friend_id,
          });
          setMessage(true);
       } catch (error) {
-         console.log(error.response.data);
+         console.log(error.response.data.message);
          setAlert(true);
       }
    };
 
-   const removeFriend = async (user_id, email) => {
+   const removeFriend = async (friend_id) => {
       try {
          await axios.post("/friend/remove", {
-            user_id: user_id,
-            email: email,
+            user_id: `${loggedUser.id}`,
+            friend_id: friend_id,
          });
          setMessage(true);
       } catch (error) {
-         console.log(error.response.data);
+         console.log(error.response.data.message);
          setAlert(true);
       }
    };
@@ -48,7 +47,6 @@ export default function FriendsPage() {
    const friendsListElement =
       friendsList &&
       friendsList.map((friend, index) => {
-         const user = usersList.find((user) => friend.email === user.email);
          return (
             <div
                key={index}
@@ -56,11 +54,11 @@ export default function FriendsPage() {
             >
                <div className="flex flex-col items-center">
                   <img
-                     src={user.picture}
+                     src={friend.picture}
                      className="w-40 rounded hover:opacity-80 cursor-pointer"
                      alt="profilePic"
                      onClick={(e) => {
-                        handleUser(user);
+                        handleUser(friend);
                      }}
                   />
 
@@ -68,7 +66,7 @@ export default function FriendsPage() {
                      <span
                         className="hover:text-quaternary cursor-pointer"
                         onClick={(e) => {
-                           handleUser(user);
+                           handleUser(friend);
                         }}
                      >
                         {friend.name}
@@ -77,7 +75,8 @@ export default function FriendsPage() {
                </div>
                <button
                   onClick={(e) => {
-                     removeFriend(friend.user_id, friend.email);
+                     removeFriend(friend.id,);
+                     handleClick();
                      clearMessage();
                   }}
                   className="border border-gray-400 p-1 rounded-md text-white text-lg font-bold bg-primary hover:bg-quaternary "
@@ -91,9 +90,11 @@ export default function FriendsPage() {
    const list =
       usersList &&
       usersList.map((user, index) => {
-         const checkFriend = friendsList.find((friend) => {
-            return user.email === friend.email;
-         });
+         const checkFriend =
+            friendsList &&
+            friendsList.find((friend) => {
+               return user.email === friend.email;
+            });
          if (!checkFriend && user.email !== loggedUser.email) {
             return (
                <div
@@ -124,7 +125,8 @@ export default function FriendsPage() {
                   <div>
                      <button
                         onClick={(e) => {
-                           addFriend(user.name, user.email);
+                           addFriend(user.id);
+                           handleClick();
                            clearMessage();
                         }}
                         className="border border-gray-400 p-1 rounded-md text-white text-lg font-bold bg-primary hover:bg-quaternary "
@@ -154,7 +156,7 @@ export default function FriendsPage() {
 
          <div className="w-11/12 mt-10">
             <span className="font-bold text-3xl justify-start text-primary">
-               {friendsList.length > 0
+               {friendsList && friendsList.length > 0
                   ? "Your friends list"
                   : "You've got no friends"}
             </span>
