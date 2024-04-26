@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 
 export function LeftContent() {
    const { userPicArray, clickedUser } = useContext(DataContext);
+   const userFriendsList = clickedUser.friends_list;
+
    let photo;
 
    if (userPicArray) {
@@ -51,7 +53,7 @@ export function LeftContent() {
          </div>
 
          <div className={styles.photoWrapper}>
-            <h1>Photo</h1>
+            <span className="flex font-bold ml-3 mt-2">Photo</span>
             <Grid
                container
                className={styles.gridContainer}
@@ -62,25 +64,25 @@ export function LeftContent() {
          </div>
 
          <div className={styles.friendsWrapper}>
-            <h1>Friends</h1>
+            <span className="flex font-bold ml-3 mt-2">Friends</span>
             <Grid
                container
                className={styles.gridContainer}
                style={{ gap: "3px 6px" }}
             >
-               {/* {users.map((user) => {
-                  if (user.userId < 10) {
-                     return (
-                        <Grid key={user.userId}>
-                           <FriendsElement
-                              key={user.userId}
-                              name={`${user.name}`}
-                              picture={user ? user.picture : ""}
-                           ></FriendsElement>
-                        </Grid>
-                     );
-                  }
-               })} */}
+               {userFriendsList &&
+                  userFriendsList.map((friend, index) => {
+                     if (index < 10) {
+                        return (
+                           <Grid key={index}>
+                              <FriendsElement
+                                 key={index}
+                                 friend={friend}
+                              ></FriendsElement>
+                           </Grid>
+                        );
+                     }
+                  })}
             </Grid>
          </div>
       </div>
