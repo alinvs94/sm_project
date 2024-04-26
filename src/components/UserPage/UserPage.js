@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "./UserPage.module.scss";
 import { FriendsList } from "./FriendsList/FriendsList";
@@ -7,17 +8,31 @@ import { RightContent } from "./RightContent/RightContent";
 import { DataContext } from "../AppData/AppData";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import VerifiedIcon from '@mui/icons-material/Verified';
+import VerifiedIcon from "@mui/icons-material/Verified";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { click } from "@testing-library/user-event/dist/click";
 
 export function UserPage() {
-   const { friendsList, clickedUser, handleUser, setClickedUser } =
+   const { friendsList, clickedUser, handleUser, setClickedUser, loggedUser, handleClick } =
       useContext(DataContext);
    const [isFriend, setIsFriend] = useState(false);
    const { userName, userId } = useParams();
+
+   // Dropdown functions
+
+   const [anchorEl, setAnchorEl] = useState(null);
+   const open = Boolean(anchorEl);
+   const handleEvent = (event) => {
+      setAnchorEl(event.currentTarget);
+   };
+   const handleClose = () => {
+      setAnchorEl(null);
+   };
+
+   //
 
    let friend;
    const userFriendsList = clickedUser.friends_list;
@@ -39,15 +54,20 @@ export function UserPage() {
       getUser();
    }, []);
 
+   // Check if isFriend
+
    useEffect(() => {
       const checkFriend = friendsList.find((friend) => {
-         return (friend.id === clickedUser.id);
+         return friend.id === clickedUser.id;
       });
-      console.log(checkFriend);
-      if(checkFriend) {
+      if (checkFriend) {
          setIsFriend(true);
+      } else {
+         setIsFriend(false);
       }
    }, [friendsList]);
+
+// User friends list 
 
    if (userFriendsList && userFriendsList.length > 0) {
       friend = userFriendsList.map((friend, index) => {
@@ -59,6 +79,32 @@ export function UserPage() {
    } else {
       friend = "";
    }
+
+   // Friend requests
+
+   const addFriend = async (friend_id) => {
+      try {
+         await axios.post("/friend/add", {
+            user_id: `${loggedUser.id}`,
+            friend_id: friend_id,
+         });
+      } catch (error) {
+         console.log(error.response.data.message);
+      }
+      handleClick();
+   };
+
+   const removeFriend = async (friend_id) => {
+      try {
+         await axios.post("/friend/remove", {
+            user_id: `${loggedUser.id}`,
+            friend_id: friend_id,
+         });
+      } catch (error) {
+         console.log(error.response.data.message);
+      }
+      handleClick();
+   };
 
    return (
       <div className={styles.profilePageWrapper}>
@@ -81,7 +127,7 @@ export function UserPage() {
                   ></img>
 
                   <div className={styles.profileInfo}>
-                     <span className="text-4xl font-extrabold">
+                     <span className="text-4xl font-extrabold ml-1">
                         {clickedUser ? `${clickedUser.name}` : "Loading"}
                      </span>
 
@@ -105,18 +151,66 @@ export function UserPage() {
                </div>
 
                <div className={styles.rightHeader}>
-               {isFriend ? <Button
-                     variant="contained"
-                     className={styles.rightHeaderButton}
-                  >
-                     <VerifiedIcon></VerifiedIcon>Already Friends
-                  </Button>: <Button
-                     variant="contained"
-                     className={styles.rightHeaderButton}
-                  >
-                     <AddIcon></AddIcon>Add Friend
-                  </Button>}
-                  
+                  {isFriend ? (
+                     <>
+                        <Button
+                           variant="contained"
+                           className={styles.rightHeaderButton}
+                           onClick={handleEvent}
+                        >
+                           <VerifiedIcon></VerifiedIcon>Already Friends
+                        </Button>
+
+                        <Menu
+                           id="basic-menu"
+                           anchorEl={anchorEl}
+                           open={open}
+                           onClose={handleClose}
+                           MenuListProps={{
+                              "aria-labelledby": "basic-button",
+                           }}
+                           sx={{
+                              marginTop: "5px",
+                              marginLeft: "9px",
+                           }}
+                        >
+                           <MenuItem
+                              onClick={handleClose}
+                              sx={{
+                                 fontWeight: "bold",
+                                 ":hover": {
+                                    color: "#016797",
+                                 },
+                              }}
+                           >
+                              Add to Favorites
+                           </MenuItem>
+                           <MenuItem
+                              onClick={(e) => {
+                                 handleClose();
+                                 removeFriend(userId);
+                              }}
+                              sx={{
+                                 fontWeight: "bold",
+                                 ":hover": {
+                                    color: "#016797",
+                                 },
+                              }}
+                           >
+                              Remove Friend
+                           </MenuItem>
+                        </Menu>
+                     </>
+                  ) : (
+                     <Button
+                        variant="contained"
+                        className={styles.rightHeaderButton}
+                        onClick={(e) => {addFriend(userId)}}
+                     >
+                        <AddIcon></AddIcon>Add Friend
+                     </Button>
+                  )}
+
                   <Button
                      variant="contained"
                      className={styles.rightHeaderButton}
