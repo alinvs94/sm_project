@@ -21,15 +21,15 @@ export const AppData = ({ children }) => {
    // Set axios headers
 
    axios.defaults.baseURL = "http://127.0.0.1:8000/api";
-   
+
    if (localStorage.getItem("tk") !== undefined) {
-      axios.defaults.headers[
-         "Authorization"
-      ] = `Bearer ${localStorage.getItem("tk")}`;
+      axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem(
+         "tk"
+      )}`;
    } else {
       delete axios.defaults.headers["Authorization"];
    }
-   
+
    // useEffect(() => {
    //    if (localStorage.getItem("tk") !== undefined) {
    //       axios.defaults.headers[
@@ -126,10 +126,14 @@ export const AppData = ({ children }) => {
    // Go to clicked user
 
    function handleUser(user) {
-      navigate(`/user/${user.name}/${user.id}`);
-      setClickedUser((prevState) => {
-         return (prevState = user);
-      });
+      if (user.id === loggedUser.id) {
+         navigate(`/profile/${loggedUser.name}`);
+      } else {
+         navigate(`/user/${user.name}/${user.id}`);
+         setClickedUser((prevState) => {
+            return (prevState = user);
+         });
+      }
    }
 
    // Get user pictures
@@ -137,13 +141,13 @@ export const AppData = ({ children }) => {
    useEffect(() => {
       const picArray = [];
       for (let i = 0; i < 9; i++) {
-         const pic = `https://picsum.photos/150/150?random=${
-            clickedUser.id + i
-         }`;
+         const pic = `https://picsum.photos/seed/${
+            clickedUser.id * 4 + i
+         }/150/150`;
          picArray.push(pic);
       }
       setUserPicArray((prevState) => (prevState = picArray));
-   }, [navigate]);
+   }, [clickedUser]);
 
    const handleLogClick = async (e) => {
       const buttonValue = e.target.value;
