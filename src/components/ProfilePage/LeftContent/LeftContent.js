@@ -2,7 +2,7 @@ import styles from "./LeftContent.module.scss";
 import { Link } from "react-router-dom";
 import { PhotosElement } from "./PhotosElement/PhotosElement";
 import { FriendsElement } from "./FriendsElement/FriendsElement";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../AppData/AppData";
 
 import Button from "@mui/material/Button";
@@ -13,8 +13,20 @@ import PlaceIcon from "@mui/icons-material/Place";
 import Grid from "@mui/material/Grid";
 
 export function LeftContent() {
-   const { USERS, userPicArray, loggedUser } = useContext(DataContext);
+   const { loggedUser, friendsList } = useContext(DataContext);
+   const [userPicArray, setUserPicArray] = useState([]);
    let photo;
+
+   useEffect(() => {
+      const picArray = [];
+      for (let i = 0; i < 9; i++) {
+         const pic = `https://picsum.photos/seed/${
+            loggedUser.id * 4 + i
+         }/150/150`;
+         picArray.push(pic);
+      }
+      setUserPicArray((prevState) => (prevState = picArray));
+   }, [loggedUser]);
 
    if (userPicArray) {
       if (userPicArray.length === 0) {
@@ -57,7 +69,7 @@ export function LeftContent() {
          </div>
 
          <div className={styles.photoWrapper}>
-            <h1>Photo</h1>
+            <span className="flex font-bold ml-3 mt-2">Photo</span>
             <Grid
                container
                className={styles.gridContainer}
@@ -68,25 +80,25 @@ export function LeftContent() {
          </div>
 
          <div className={styles.friendsWrapper}>
-            <h1>Friends</h1>
+            <span className="flex font-bold ml-3 mt-2">Friends</span>
             <Grid
                container
                className={styles.gridContainer}
                style={{ gap: "3px 6px" }}
             >
-               {USERS.map((user) => {
-                  if (user.userId < 10) {
-                     return (
-                        <Grid key={user.userId}>
-                           <FriendsElement
-                              key={user.userId}
-                              name={`${user.name}`}
-                              picture={user ? user.picture : ""}
-                           ></FriendsElement>
-                        </Grid>
-                     );
-                  }
-               })}
+               {friendsList &&
+                  friendsList.map((friend, index) => {
+                     if (index < 9) {
+                        return (
+                           <Grid key={index}>
+                              <FriendsElement
+                                 key={index}
+                                 friend={friend}
+                              ></FriendsElement>
+                           </Grid>
+                        );
+                     }
+                  })}
             </Grid>
          </div>
       </div>
