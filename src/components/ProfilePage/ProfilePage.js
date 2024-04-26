@@ -14,15 +14,15 @@ import CreateIcon from "@mui/icons-material/Create";
 import { useContext } from "react";
 
 export function ProfilePage() {
-   const { usersList, FRIENDS, loggedUser } = useContext(DataContext);
+   const { usersList, friendsList, loggedUser } = useContext(DataContext);
 
    let friend;
 
-   if (usersList.length === 0) {
+   if (friendsList.length === 0) {
       friend = "You've got no friends";
    } else {
-      friend = usersList.map((user, index) => {
-         if (user.id < 7) {
+      friend = friendsList.map((user, index) => {
+         if (index < 7) {
             return (
                <FriendsList
                   key={index}
@@ -75,10 +75,23 @@ export function ProfilePage() {
                         </Tooltip>
                      </div>
 
-                     <h1>{loggedUser ? `${loggedUser.name}` : "Loading"}</h1>
+                     <span className="text-4xl font-extrabold ml-1">
+                        {loggedUser ? `${loggedUser.name}` : "Loading"}
+                     </span>
 
                      <div className={styles.friendsCount}>
-                        {FRIENDS.length} <h5>friends</h5>
+                        {friendsList && friendsList.length === 0 ? (
+                           <span className="text-lg mt-3">No Friends</span>
+                        ) : (
+                           <span className="flex gap-1">
+                              {friendsList && friendsList.length}
+                              <h5>
+                                 {friendsList && friendsList.length > 1
+                                    ? "friends"
+                                    : "friend"}
+                              </h5>
+                           </span>
+                        )}
                      </div>
 
                      <div className={styles.friendsList}>{friend}</div>
@@ -104,14 +117,12 @@ export function ProfilePage() {
             <hr />
             {/* NavBar */}
 
-            <ProfileNavBar></ProfileNavBar>  
+            <ProfileNavBar></ProfileNavBar>
 
             <div className={styles.profilePageContent}>
                <LeftContent className={styles.leftContent}></LeftContent>
 
-               <RightContent
-                  className={styles.rightContent}
-               ></RightContent>
+               <RightContent className={styles.rightContent}></RightContent>
             </div>
          </div>
       </div>
