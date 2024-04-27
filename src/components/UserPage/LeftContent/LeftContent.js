@@ -33,7 +33,7 @@ export function LeftContent() {
    return (
       <div className={styles.leftWrapper}>
          <div className={styles.biography}>
-            <h1> In short</h1>
+            <span className="flex font-bold ml-3 mt-2">In Short</span>
             <p>
                <SchoolIcon></SchoolIcon> Studied at
                <Link
@@ -65,25 +65,32 @@ export function LeftContent() {
 
          <div className={styles.friendsWrapper}>
             <span className="flex font-bold ml-3 mt-2">Friends</span>
-            <Grid
-               container
-               className={styles.gridContainer}
-               style={{ gap: "3px 6px" }}
-            >
-               {userFriendsList &&
-                  userFriendsList.map((friend, index) => {
-                     if (index < 10) {
-                        return (
-                           <Grid key={index}>
-                              <FriendsElement
-                                 key={index}
-                                 friend={friend}
-                              ></FriendsElement>
-                           </Grid>
-                        );
-                     }
-                  })}
-            </Grid>
+
+            {userFriendsList && userFriendsList.length > 0 ? (
+               <Grid
+                  container
+                  className={styles.gridContainer}
+                  style={{ gap: "3px 6px" }}
+               >
+                  {userFriendsList &&
+                     userFriendsList.map((friend, index) => {
+                        if (index < 9) {
+                           return (
+                              <Grid key={index}>
+                                 <FriendsElement
+                                    key={index}
+                                    friend={friend}
+                                 ></FriendsElement>
+                              </Grid>
+                           );
+                        }
+                     })}
+               </Grid>
+            ) : (
+               <div className="flex font-bold w-full text-xl justify-center mb-3">
+                  <span>Lonely person</span>
+               </div>
+            )}
          </div>
       </div>
    );
