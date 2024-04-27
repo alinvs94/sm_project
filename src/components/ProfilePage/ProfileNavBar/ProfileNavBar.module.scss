@@ -17,7 +17,8 @@
       transition: 0.3s all;
 
       &:hover {
-        color: $tertiary;
+        color: $primary;
+        background-color:  white;
       }
     }
 
@@ -28,12 +29,12 @@
       cursor: pointer;
       width: inherit;
       padding: 8px;
-      border-radius: 0.1px;
+      border-radius: 4px;
       transition: 0.3s all;
 
       &:hover {
-        background-color: $primary;
-        color: $tertiary;
+        background-color: white;
+        color: $primary;
       }
     }
   }

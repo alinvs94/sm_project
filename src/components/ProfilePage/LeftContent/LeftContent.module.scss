@@ -39,9 +39,9 @@
       background-color: $primary;
       transition: 0.3s all;
       margin-top: 20px;
-
+      gap: 3px;
       &:hover {
-        background-color: teal;
+        background-color: $quaternary;
       }
     }
   }
