@@ -42,7 +42,7 @@ export const AppData = ({ children }) => {
          }
       };
       getAllUsers();
-   }, []);
+   }, [isLoggedIn]);
 
    // Get logged user
 
@@ -61,7 +61,7 @@ export const AppData = ({ children }) => {
       };
 
       getLoggedUser();
-   }, [usersList, clickState]);
+   }, [usersList, clickState, isLoggedIn]);
 
    // Handle Click
 
