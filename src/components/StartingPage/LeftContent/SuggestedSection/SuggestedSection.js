@@ -21,7 +21,7 @@ export function SuggestedSection() {
 
     {
       key: 3,
-      url: "https://scontent.fias1-1.fna.fbcdn.net/v/t1.18169-9/27867546_1805731176111872_7671221085261821596_n.png?_nc_cat=108&ccb=1-7&_nc_sid=174925&_nc_ohc=eGZIDz-HLb8AX8ftHFm&tn=RfANmTJ_pZ_wywN8&_nc_ht=scontent.fias1-1.fna&oh=00_AfBCJbCko1Yt_L_VlF5VhYQNIU06f5Qs39Ag99ZNYVhgEQ&oe=6411C8B4",
+      url: "https://scontent.fias1-2.fna.fbcdn.net/v/t39.30808-6/277463468_5296790307005924_2704744971853385517_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9PIp8YvyQnEQ7kNvgHN0KCO&_nc_ht=scontent.fias1-2.fna&oh=00_AfC9ykErd36l14jMNLufoV9EB0tBUeZU9dz5Ww1XzmvItA&oe=6632F6F9",
       title: "IT School Offers",
       description:
         "Aliquam et elementum est. Suspendisse potenti. Duis finibus erat nec scelerisque viverra. Integer sed quam.",

@@ -14,7 +14,6 @@ export function CardComponent({url, title, description, link}) {
 
         <CardMedia
           component="img"
-          height="140"
           image={url}
           alt="news"
         />

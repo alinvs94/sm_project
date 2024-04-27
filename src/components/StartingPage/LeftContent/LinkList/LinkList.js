@@ -43,7 +43,7 @@ export function LinkList() {
       <ul className={styles.linkListElements}>
         <li className={styles.linkListElement}>
           <Link to={`/profile/${loggedUser.name}`}>
-            <img src={require("./images/profile2.jpg")} alt='profileImg'></img>
+            <img src={loggedUser.picture} alt='profileImg'></img>
             <span>My Profile</span>
           </Link>
         </li>
