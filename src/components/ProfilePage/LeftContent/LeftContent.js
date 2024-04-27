@@ -45,7 +45,7 @@ export function LeftContent() {
    return (
       <div className={styles.leftWrapper}>
          <div className={styles.biography}>
-            <h1> In short</h1>
+         <span className="flex font-bold ml-3 mt-2">In Short</span>
             <p>
                <SchoolIcon></SchoolIcon> Studied at
                <Link
@@ -64,7 +64,7 @@ export function LeftContent() {
             </p>
 
             <Button variant="contained" className={styles.addInfoButton}>
-               <CreateIcon></CreateIcon>Add some information
+               <CreateIcon></CreateIcon>Change some information
             </Button>
          </div>
 
@@ -81,25 +81,31 @@ export function LeftContent() {
 
          <div className={styles.friendsWrapper}>
             <span className="flex font-bold ml-3 mt-2">Friends</span>
-            <Grid
-               container
-               className={styles.gridContainer}
-               style={{ gap: "3px 6px" }}
-            >
-               {friendsList &&
-                  friendsList.map((friend, index) => {
-                     if (index < 9) {
-                        return (
-                           <Grid key={index}>
-                              <FriendsElement
-                                 key={index}
-                                 friend={friend}
-                              ></FriendsElement>
-                           </Grid>
-                        );
-                     }
-                  })}
-            </Grid>
+            {friendsList && friendsList.length > 0 ? (
+               <Grid
+                  container
+                  className={styles.gridContainer}
+                  style={{ gap: "3px 6px" }}
+               >
+                  {friendsList &&
+                     friendsList.map((friend, index) => {
+                        if (index < 9) {
+                           return (
+                              <Grid key={index}>
+                                 <FriendsElement
+                                    key={index}
+                                    friend={friend}
+                                 ></FriendsElement>
+                              </Grid>
+                           );
+                        }
+                     })}
+               </Grid>
+            ) : (
+               <div className="flex font-bold w-full text-xl justify-center mb-3">
+                  <span>Lonely person</span>
+               </div>
+            )}
          </div>
       </div>
    );

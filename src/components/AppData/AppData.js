@@ -30,16 +30,6 @@ export const AppData = ({ children }) => {
       delete axios.defaults.headers["Authorization"];
    }
 
-   // useEffect(() => {
-   //    if (localStorage.getItem("tk") !== undefined) {
-   //       axios.defaults.headers[
-   //          "Authorization"
-   //       ] = `Bearer ${localStorage.getItem("tk")}`;
-   //    } else {
-   //       delete axios.defaults.headers["Authorization"];
-   //    }
-   // }, [isLoggedIn,]);
-
    // Get all users
 
    useEffect(() => {
