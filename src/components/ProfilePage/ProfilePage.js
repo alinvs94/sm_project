@@ -14,7 +14,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import { useContext } from "react";
 
 export function ProfilePage() {
-   const { usersList, friendsList, loggedUser } = useContext(DataContext);
+   const { friendsList, loggedUser } = useContext(DataContext);
 
    let friend;
 
