@@ -38,9 +38,17 @@ export default function FriendsPage() {
             friend_id: friend_id,
          });
          setMessage(true);
-      } catch (error) {
-         console.log(error.response.data.message);
-         setAlert(true);
+      } catch {
+         try {
+            await axios.post("/friend/remove", {
+               user_id: friend_id,
+               friend_id: `${loggedUser.id}`,
+            });
+            setMessage(true);
+         } catch (error) {
+            console.log(error.response.data.message);
+            setAlert(true);
+         }
       }
    };
 
@@ -75,7 +83,7 @@ export default function FriendsPage() {
                </div>
                <button
                   onClick={(e) => {
-                     removeFriend(friend.id,);
+                     removeFriend(friend.id);
                      handleClick();
                      clearMessage();
                   }}
